@@ -10,12 +10,12 @@
 Summary:	The Qt5 WebEngine library
 Summary(pl.UTF-8):	Biblioteka Qt5 WebEngine
 Name:		qt5-%{orgname}
-Version:	5.5.1
+Version:	5.11.1
 Release:	0.1
 License:	LGPL v3 or GPL v2+ or commercial
 Group:		X11/Libraries
-Source0:	http://download.qt.io/official_releases/qt/5.5/%{version}/submodules/%{orgname}-opensource-src-%{version}.tar.xz
-# Source0-md5:	2a548bde706e8639cdec2cbe31d85545
+Source0:	http://download.qt.io/official_releases/qt/5.11/%{version}/submodules/%{orgname}-everywhere-src-%{version}.tar.xz
+# Source0-md5:	75d2ff31addba4ec41981b0f459cc587
 URL:		http://www.qt.io/
 BuildRequires:	Qt5Core-devel >= %{qtbase_ver}
 BuildRequires:	Qt5Gui-devel >= %{qtbase_ver}
@@ -128,11 +128,12 @@ Qt5 WebEngine examples.
 Przykłady do biblioteki Qt5 WebEngine.
 
 %prep
-%setup -q -n %{orgname}-opensource-src-%{version}
+%setup -q -n %{orgname}-everywhere-src-%{version}
 
 %build
 qmake-qt5
-%{__make}
+%{__make} \
+	QMAKE_CXX="g++"
 %{?with_doc:%{__make} docs}
 
 %install
@@ -146,7 +147,7 @@ rm -rf $RPM_BUILD_ROOT
 %endif
 
 # useless symlinks
-%{__rm} $RPM_BUILD_ROOT%{_libdir}/libQt5*.so.5.?
+%{__rm} $RPM_BUILD_ROOT%{_libdir}/libQt5*.so.5.??
 # actually drop *.la, follow policy of not packaging them when *.pc exist
 %{__rm} $RPM_BUILD_ROOT%{_libdir}/libQt5*.la
 
