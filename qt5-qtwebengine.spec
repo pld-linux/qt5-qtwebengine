@@ -16,6 +16,7 @@ License:	LGPL v3 or GPL v2+ or commercial
 Group:		X11/Libraries
 Source0:	http://download.qt.io/official_releases/qt/5.11/%{version}/submodules/%{orgname}-everywhere-src-%{version}.tar.xz
 # Source0-md5:	75d2ff31addba4ec41981b0f459cc587
+Patch0:		remove-compiler-check.patch
 URL:		http://www.qt.io/
 BuildRequires:	Qt5Core-devel >= %{qtbase_ver}
 BuildRequires:	Qt5Gui-devel >= %{qtbase_ver}
@@ -129,6 +130,7 @@ Przykłady do biblioteki Qt5 WebEngine.
 
 %prep
 %setup -q -n %{orgname}-everywhere-src-%{version}
+%patch0 -p1
 
 %build
 qmake-qt5
