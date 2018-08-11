@@ -17,6 +17,7 @@ Group:		X11/Libraries
 Source0:	http://download.qt.io/official_releases/qt/5.11/%{version}/submodules/%{orgname}-everywhere-src-%{version}.tar.xz
 # Source0-md5:	75d2ff31addba4ec41981b0f459cc587
 Patch0:		remove-compiler-check.patch
+Patch1:		chromium-66.0.3359.170-gcc8-alignof.patch
 URL:		http://www.qt.io/
 BuildRequires:	Qt5Core-devel >= %{qtbase_ver}
 BuildRequires:	Qt5Gui-devel >= %{qtbase_ver}
@@ -131,11 +132,13 @@ Przykłady do biblioteki Qt5 WebEngine.
 %prep
 %setup -q -n %{orgname}-everywhere-src-%{version}
 %patch0 -p1
+cd ./src/3rdparty/chromium
+%patch1 -p1
+
 
 %build
 qmake-qt5
-%{__make} \
-	QMAKE_CXX="g++"
+%{__make}
 %{?with_doc:%{__make} docs}
 
 %install
@@ -176,8 +179,8 @@ ifecho_tree() {
 }
 
 echo "%defattr(644,root,root,755)" > examples.files
-ifecho_tree examples %{_examplesdir}/qt5/qwebengine
 ifecho_tree examples %{_examplesdir}/qt5/webengine
+ifecho_tree examples %{_examplesdir}/qt5/webenginewidgets
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -189,20 +192,47 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/libQt5WebEngine.so.*.*.*
 %attr(755,root,root) %ghost %{_libdir}/libQt5WebEngine.so.5
+%attr(755,root,root) %{_libdir}/libQt5WebEngineCore.so.*.*.*
+%attr(755,root,root) %ghost %{_libdir}/libQt5WebEngineCore.so.5
+%attr(755,root,root) %{_libdir}/libQt5WebEngineWidgets.so.*.*.*
+%attr(755,root,root) %ghost %{_libdir}/libQt5WebEngineWidgets.so.5
 %dir %{qt5dir}/qml/QtWebEngine
-%attr(755,root,root) %{qt5dir}/qml/QtWebEngine/libdeclarative_webengine.so
 %{qt5dir}/qml/QtWebEngine/plugins.qmltypes
 %{qt5dir}/qml/QtWebEngine/qmldir
+%{qt5dir}/qml/QtWebEngine/Controls1Delegates
+%{qt5dir}/qml/QtWebEngine/Controls2Delegates
+%attr(755,root,root) %{qt5dir}/qml/QtWebEngine/libqtwebengineplugin.so
+%{_datadir}/qt5/resources/icudtl.dat
+%{_datadir}/qt5/resources/qtwebengine*.pak
+%attr(755,root,root)  %{_libdir}/qt5/bin/qwebengine_convert_dict
+%attr(755,root,root) %{_libdir}/qt5/libexec/QtWebEngineProcess
+%attr(755,root,root) %{_libdir}/qt5/plugins/designer/libqwebengineview.so
 
 %files -n Qt5WebEngine-devel
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/libQt5WebEngine.so
+%attr(755,root,root) %{_libdir}/libQt5WebEngineCore.so
+%attr(755,root,root) %{_libdir}/libQt5WebEngineWidgets.so
 %{_libdir}/libQt5WebEngine.prl
+%{_libdir}/libQt5WebEngineCore.prl
+%{_libdir}/libQt5WebEngineWidgets.prl
 %{_includedir}/qt5/QtWebEngine
+%{_includedir}/qt5/QtWebEngineCore
+%{_includedir}/qt5/QtWebEngineWidgets
 %{_pkgconfigdir}/Qt5WebEngine.pc
+%{_pkgconfigdir}/Qt5WebEngineCore.pc
+%{_pkgconfigdir}/Qt5WebEngineWidgets.pc
 %{_libdir}/cmake/Qt5WebEngine
+%{_libdir}/cmake/Qt5WebEngineCore
+%{_libdir}/cmake/Qt5WebEngineWidgets
+%{_libdir}/cmake/Qt5Designer/Qt5Designer_QWebEngineViewPlugin.cmake
 %{qt5dir}/mkspecs/modules/qt_lib_webengine.pri
 %{qt5dir}/mkspecs/modules/qt_lib_webengine_private.pri
+%{_libdir}/qt5/mkspecs/modules/qt_lib_webenginecore.pri
+%{_libdir}/qt5/mkspecs/modules/qt_lib_webenginecore_private.pri
+%{_libdir}/qt5/mkspecs/modules/qt_lib_webenginecoreheaders_private.pri
+%{_libdir}/qt5/mkspecs/modules/qt_lib_webenginewidgets.pri
+%{_libdir}/qt5/mkspecs/modules/qt_lib_webenginewidgets_private.pri
 
 %if %{with doc}
 %files doc
