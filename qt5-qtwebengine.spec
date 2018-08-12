@@ -202,6 +202,7 @@ rm -rf $RPM_BUILD_ROOT
 %{qt5dir}/qml/QtWebEngine/Controls1Delegates
 %{qt5dir}/qml/QtWebEngine/Controls2Delegates
 %attr(755,root,root) %{qt5dir}/qml/QtWebEngine/libqtwebengineplugin.so
+%dir %{_datadir}/qt5/resources
 %{_datadir}/qt5/resources/icudtl.dat
 %{_datadir}/qt5/resources/qtwebengine*.pak
 %attr(755,root,root)  %{_libdir}/qt5/bin/qwebengine_convert_dict
