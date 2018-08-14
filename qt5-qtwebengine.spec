@@ -18,6 +18,7 @@ Source0:	http://download.qt.io/official_releases/qt/5.11/%{version}/submodules/%
 # Source0-md5:	75d2ff31addba4ec41981b0f459cc587
 Patch0:		remove-compiler-check.patch
 Patch1:		chromium-66.0.3359.170-gcc8-alignof.patch
+Patch2:		x32.patch
 URL:		http://www.qt.io/
 BuildRequires:	Qt5Core-devel >= %{qtbase_ver}
 BuildRequires:	Qt5Gui-devel >= %{qtbase_ver}
@@ -132,11 +133,16 @@ Przykłady do biblioteki Qt5 WebEngine.
 %prep
 %setup -q -n %{orgname}-everywhere-src-%{version}
 %patch0 -p1
+%ifarch x32
+%patch2 -p1
+%endif
 cd ./src/3rdparty/chromium
 %patch1 -p1
 
-
 %build
+%ifarch x32
+export V8_TARGET_ARCH="x32"
+%endif
 qmake-qt5
 %{__make}
 %{?with_doc:%{__make} docs}
