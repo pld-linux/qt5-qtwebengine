@@ -1,12 +1,9 @@
 #
 # Conditional build:
 %bcond_without	doc	# Documentation
+%bcond_with	system_libvpx	# Build with system libvpx
 
 %define		orgname		qtwebengine
-%define		qtbase_ver		%{version}
-%define		qtdeclarative_ver	%{version}
-%define		qttools_ver		%{version}
-%define		qtwebchannel_ver	%{version}
 Summary:	The Qt5 WebEngine library
 Summary(pl.UTF-8):	Biblioteka Qt5 WebEngine
 Name:		qt5-%{orgname}
@@ -19,21 +16,66 @@ Source0:	http://download.qt.io/official_releases/qt/5.11/%{version}/submodules/%
 Patch0:		remove-compiler-check.patch
 Patch1:		x32.patch
 URL:		http://www.qt.io/
-BuildRequires:	Qt5Core-devel >= %{qtbase_ver}
-BuildRequires:	Qt5Gui-devel >= %{qtbase_ver}
-BuildRequires:	Qt5Network-devel >= %{qtbase_ver}
-BuildRequires:	Qt5Qml-devel >= %{qtdeclarative_ver}
-BuildRequires:	Qt5Quick-devel >= %{qtdeclarative_ver}
-BuildRequires:	Qt5WebChannel-devel >= %{qtwebchannel_ver}
-BuildRequires:	Qt5Widgets-devel >= %{qtbase_ver}
+BuildRequires:	Mesa-khrplatform-devel
+BuildRequires:	Qt5Core-devel >= %{version}
+BuildRequires:	Qt5Designer-devel >= %{version}
+BuildRequires:	Qt5Gui-devel >= %{version}
+BuildRequires:	Qt5Network-devel >= %{version}
+BuildRequires:	Qt5Positioning-devel >= %{version}
+BuildRequires:	Qt5PrintSupport-devel >= %{version}
+BuildRequires:	Qt5Qml-devel >= %{version}
+BuildRequires:	Qt5Quick-devel >= %{version}
+BuildRequires:	Qt5UiTools-devel >= %{version}
+BuildRequires:	Qt5WebChannel-devel >= %{version}
+BuildRequires:	Qt5WebSockets-devel >= %{version}
+BuildRequires:	Qt5Widgets-devel >= %{version}
+BuildRequires:	alsa-lib-devel >= 1.0.10
+BuildRequires:	bison
+BuildRequires:	dbus-devel
+BuildRequires:	ffmpeg-devel
+BuildRequires:	flex
+BuildRequires:	fontconfig-devel
+BuildRequires:	freetype-devel >= 2.4.2
+BuildRequires:	glib2-devel >= 1:2.32.0
+BuildRequires:	glibc-misc >= 2.17
+BuildRequires:	gperf
+BuildRequires:	harfbuzz-devel >= 1.4.2
+BuildRequires:	jsoncpp-devel
+BuildRequires:	lcms2-devel
+BuildRequires:	libdrm-devel
+BuildRequires:	libevent-devel
+BuildRequires:	libicu-devel >= 53
+BuildRequires:	libjpeg-devel
+BuildRequires:	libpng-devel >= 1.6.0
+%{?with_system_libvpx:BuildRequires:	libvpx-devel >= 1.8.0}
+BuildRequires:	libwebp-devel
+BuildRequires:	libxml2-devel
+BuildRequires:	libxslt-devel
+BuildRequires:	minizip-devel
+BuildRequires:	ninja
+BuildRequires:	nss-devel >= 3.26
+BuildRequires:	opus-devel
+BuildRequires:	pkgconfig
+BuildRequires:	poppler-cpp-devel
+BuildRequires:	protobuf-devel
+BuildRequires:	pulseaudio-devel >= 0.9.10
+BuildRequires:	re2-devel
+BuildRequires:	snappy-devel
 %if %{with doc}
-BuildRequires:	qt5-assistant >= %{qttools_ver}
+BuildRequires:	qt5-assistant >= %{version}
 %endif
-BuildRequires:	qt5-build >= %{qtbase_ver}
-BuildRequires:	qt5-qmake >= %{qtbase_ver}
+BuildRequires:	qt5-build >= %{version}
+BuildRequires:	qt5-qmake >= %{version}
 BuildRequires:	rpmbuild(macros) >= 1.654
 BuildRequires:	tar >= 1:1.22
+BuildRequires:	xorg-lib-libX11-devel
+BuildRequires:	xorg-lib-libXcomposite-devel
+BuildRequires:	xorg-lib-libXcursor-devel
+BuildRequires:	xorg-lib-libXi-devel
+BuildRequires:	xorg-lib-libXrandr-devel
+BuildRequires:	xorg-lib-libXtst-devel
 BuildRequires:	xz
+BuildRequires:	zlib-devel
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %define		specflags	-fno-strict-aliasing
@@ -58,9 +100,9 @@ Ten pakiet zawiera bibliotekę Qt5 WebEngine.
 Summary:	The Qt5 WebEngine library
 Summary(pl.UTF-8):	Biblioteka Qt5 WebEngine
 Group:		Libraries
-Requires:	Qt5Core >= %{qtbase_ver}
-Requires:	Qt5Network >= %{qtbase_ver}
-Requires:	Qt5Qml >= %{qtdeclarative_ver}
+Requires:	Qt5Core >= %{version}
+Requires:	Qt5Network >= %{version}
+Requires:	Qt5Qml >= %{version}
 
 %description -n Qt5WebEngine
 Qt5 WebEngine library provides seamless integration of C++ and QML
@@ -74,9 +116,9 @@ klientami w HTML-u/JavaScripcie.
 Summary:	Qt5 WebEngine library - development files
 Summary(pl.UTF-8):	Biblioteka Qt5 WebEngine - pliki programistyczne
 Group:		Development/Libraries
-Requires:	Qt5Core-devel >= %{qtbase_ver}
-Requires:	Qt5Network-devel >= %{qtbase_ver}
-Requires:	Qt5Qml-devel >= %{qtdeclarative_ver}
+Requires:	Qt5Core-devel >= %{version}
+Requires:	Qt5Network-devel >= %{version}
+Requires:	Qt5Qml-devel >= %{version}
 Requires:	Qt5WebEngine = %{version}-%{release}
 
 %description -n Qt5WebEngine-devel
@@ -89,7 +131,7 @@ Biblioteka Qt5 WebEngine - pliki programistyczne.
 Summary:	Qt5 WebEngine documentation in HTML format
 Summary(pl.UTF-8):	Dokumentacja do biblioteki Qt5 WebEngine w formacie HTML
 Group:		Documentation
-Requires:	qt5-doc-common >= %{qtbase_ver}
+Requires:	qt5-doc-common >= %{version}
 %if "%{_rpmversion}" >= "5"
 BuildArch:	noarch
 %endif
@@ -104,7 +146,7 @@ Dokumentacja do biblioteki Qt5 WebEngine w formacie HTML.
 Summary:	Qt5 WebEngine documentation in QCH format
 Summary(pl.UTF-8):	Dokumentacja do biblioteki Qt5 WebEngine w formacie QCH
 Group:		Documentation
-Requires:	qt5-doc-common >= %{qtbase_ver}
+Requires:	qt5-doc-common >= %{version}
 %if "%{_rpmversion}" >= "5"
 BuildArch:	noarch
 %endif
@@ -141,7 +183,9 @@ cd ./src/3rdparty/chromium
 %ifarch x32
 export V8_TARGET_ARCH="x32"
 %endif
-qmake-qt5
+qmake-qt5 -- \
+	-webengine-ffmpeg \
+	-webengine-icu
 %{__make}
 %{?with_doc:%{__make} docs}
 
