@@ -7,12 +7,12 @@
 Summary:	The Qt5 WebEngine library
 Summary(pl.UTF-8):	Biblioteka Qt5 WebEngine
 Name:		qt5-%{orgname}
-Version:	5.12.1
+Version:	5.12.2
 Release:	1
 License:	LGPL v3 or GPL v2+ or commercial
 Group:		X11/Libraries
 Source0:	http://download.qt.io/official_releases/qt/5.12/%{version}/submodules/%{orgname}-everywhere-src-%{version}.tar.xz
-# Source0-md5:	516c70f4f5ef8f4d0462425735f4ff47
+# Source0-md5:	a5182f10645103b54a35f8611fd13506
 Patch0:		remove-compiler-check.patch
 Patch1:		x32.patch
 URL:		http://www.qt.io/
