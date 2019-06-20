@@ -1,7 +1,7 @@
 #
 # Conditional build:
 %bcond_without	doc	# Documentation
-%bcond_with	system_libvpx	# Build with system libvpx
+%bcond_without	system_libvpx	# Build with system libvpx
 
 %define		orgname		qtwebengine
 Summary:	The Qt5 WebEngine library
