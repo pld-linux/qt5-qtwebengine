@@ -8,7 +8,7 @@ Summary:	The Qt5 WebEngine library
 Summary(pl.UTF-8):	Biblioteka Qt5 WebEngine
 Name:		qt5-%{orgname}
 Version:	5.13.0
-Release:	1
+Release:	2
 License:	LGPL v3 or GPL v2+ or commercial
 Group:		X11/Libraries
 Source0:	http://download.qt.io/official_releases/qt/5.13/%{version}/submodules/%{orgname}-everywhere-src-%{version}.tar.xz
@@ -47,6 +47,8 @@ BuildRequires:	libevent-devel
 BuildRequires:	libicu-devel >= 53
 BuildRequires:	libjpeg-devel
 BuildRequires:	libpng-devel >= 1.6.0
+BuildRequires:	libstdc++-devel
+BuildRequires:	libstdc++-static
 %{?with_system_libvpx:BuildRequires:	libvpx-devel >= 1.8.0}
 BuildRequires:	libwebp-devel
 BuildRequires:	libxml2-devel
