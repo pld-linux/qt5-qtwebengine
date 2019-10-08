@@ -8,14 +8,15 @@ Summary:	The Qt5 WebEngine library
 Summary(pl.UTF-8):	Biblioteka Qt5 WebEngine
 Name:		qt5-%{orgname}
 Version:	5.13.1
-Release:	1
+Release:	2
 License:	LGPL v3 or GPL v2+ or commercial
 Group:		X11/Libraries
 Source0:	http://download.qt.io/official_releases/qt/5.13/%{version}/submodules/%{orgname}-everywhere-src-%{version}.tar.xz
 # Source0-md5:	0f6a3e3d9c1a17be769fca94d4a8f7cb
 Patch0:		remove-compiler-check.patch
 Patch1:		x32.patch
-Patch2:		pulseaudio13.patch
+Patch2:		icu65.patch
+Patch3:		pulseaudio13.patch
 URL:		http://www.qt.io/
 BuildRequires:	Mesa-khrplatform-devel
 BuildRequires:	Qt5Core-devel >= %{version}
@@ -181,8 +182,9 @@ Przykłady do biblioteki Qt5 WebEngine.
 %ifarch x32
 %patch1 -p1
 %endif
+%patch2 -p1
 cd ./src/3rdparty/chromium
-%patch2 -p2
+%patch3 -p2
 
 %build
 %ifarch x32

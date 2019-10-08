@@ -1,0 +1,12 @@
+diff -urN qtwebengine-everywhere-src-5.13.1.orig/src/3rdparty/chromium/third_party/blink/renderer/core/dom/document.cc qtwebengine-everywhere-src-5.13.1/src/3rdparty/chromium/third_party/blink/renderer/core/dom/document.cc
+--- qtwebengine-everywhere-src-5.13.1.orig/src/3rdparty/chromium/third_party/blink/renderer/core/dom/document.cc	2019-08-09 15:46:06.000000000 +0200
++++ qtwebengine-everywhere-src-5.13.1/src/3rdparty/chromium/third_party/blink/renderer/core/dom/document.cc	2019-10-09 00:00:16.500761947 +0200
+@@ -5710,7 +5710,7 @@
+ 
+   for (unsigned i = 0; i < length;) {
+     UChar32 c;
+-    U16_NEXT(characters, i, length, c)
++    U16_NEXT(characters, i, length, c);
+     if (c == ':') {
+       if (saw_colon)
+         return ParseQualifiedNameResult(kQNMultipleColons);
