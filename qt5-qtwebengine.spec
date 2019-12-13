@@ -186,7 +186,8 @@ export V8_TARGET_ARCH="x32"
 %endif
 qmake-qt5 -- \
 	-webengine-ffmpeg \
-	-webengine-icu
+	-webengine-icu \
+	-webengine-proprietary-codecs
 %{__make}
 %{?with_doc:%{__make} docs}
 
