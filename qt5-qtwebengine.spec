@@ -7,12 +7,12 @@
 Summary:	The Qt5 WebEngine library
 Summary(pl.UTF-8):	Biblioteka Qt5 WebEngine
 Name:		qt5-%{orgname}
-Version:	5.14.0
+Version:	5.14.1
 Release:	1
 License:	LGPL v3 or GPL v2+ or commercial
 Group:		X11/Libraries
 Source0:	http://download.qt.io/official_releases/qt/5.14/%{version}/submodules/%{orgname}-everywhere-src-%{version}.tar.xz
-# Source0-md5:	a6765a7674728f6a3326de21937f9a94
+# Source0-md5:	26eb3bb5cd1e47320d74f4115a879b10
 Patch1:		x32.patch
 URL:		http://www.qt.io/
 BuildRequires:	Mesa-khrplatform-devel
