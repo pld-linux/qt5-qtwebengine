@@ -188,6 +188,7 @@ qmake-qt5 -- \
 	-webengine-ffmpeg \
 	-webengine-icu \
 	-webengine-proprietary-codecs
+%{?__jobs:NINJAJOBS="-j %__jobs"} \
 %{__make}
 %{?with_doc:%{__make} docs}
 
