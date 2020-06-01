@@ -7,12 +7,12 @@
 Summary:	The Qt5 WebEngine library
 Summary(pl.UTF-8):	Biblioteka Qt5 WebEngine
 Name:		qt5-%{orgname}
-Version:	5.14.2
-Release:	2
+Version:	5.15.0
+Release:	1
 License:	LGPL v3 or GPL v2+ or commercial
 Group:		X11/Libraries
-Source0:	http://download.qt.io/official_releases/qt/5.14/%{version}/submodules/%{orgname}-everywhere-src-%{version}.tar.xz
-# Source0-md5:	48f85fa5875bee56931b3be8b64a6712
+Source0:	http://download.qt.io/official_releases/qt/5.15/%{version}/submodules/%{orgname}-everywhere-src-%{version}.tar.xz
+# Source0-md5:	738478b9409f8615ca0f63738b73bbae
 Patch1:		x32.patch
 URL:		http://www.qt.io/
 BuildRequires:	Mesa-khrplatform-devel
@@ -38,12 +38,12 @@ BuildRequires:	freetype-devel >= 2.4.2
 BuildRequires:	glib2-devel >= 1:2.32.0
 BuildRequires:	glibc-misc >= 2.17
 BuildRequires:	gperf
-BuildRequires:	harfbuzz-devel >= 1.4.2
+BuildRequires:	harfbuzz-devel >= 2.2.0
 BuildRequires:	jsoncpp-devel
 BuildRequires:	lcms2-devel
 BuildRequires:	libdrm-devel
 BuildRequires:	libevent-devel
-BuildRequires:	libicu-devel >= 53
+BuildRequires:	libicu-devel >= 64
 BuildRequires:	libjpeg-devel
 BuildRequires:	libpng-devel >= 1.6.0
 BuildRequires:	libstdc++-devel
@@ -55,7 +55,7 @@ BuildRequires:	libxslt-devel
 BuildRequires:	minizip-devel
 BuildRequires:	ninja
 BuildRequires:	nss-devel >= 3.26
-BuildRequires:	opus-devel
+BuildRequires:	opus-devel >= 1.3.1
 BuildRequires:	pkgconfig
 BuildRequires:	poppler-cpp-devel
 BuildRequires:	protobuf-devel
@@ -75,9 +75,19 @@ BuildRequires:	xorg-lib-libXcursor-devel
 BuildRequires:	xorg-lib-libXi-devel
 BuildRequires:	xorg-lib-libXrandr-devel
 BuildRequires:	xorg-lib-libXtst-devel
+BuildRequires:	xorg-lib-libxkbcommon-devel
 BuildRequires:	xz
 BuildRequires:	zlib-devel
 BuildConflicts:	Qt5WebEngine-devel
+Requires:	alsa-lib >= 1.0.10
+Requires:	freetype >= 2.4.2
+Requires:	harfbuzz >= 2.2.0
+Requires:	libicu >= 64
+Requires:	libpng >= 1.6.0
+%{?with_system_libvpx:Requires:	libvpx >= 1.8.0}
+Requires:	nss >= 3.26
+Requires:	opus >= 1.3.1
+Requires:	pulseaudio-libs >= 0.9.10
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %define		specflags	-fno-strict-aliasing
@@ -173,6 +183,40 @@ Qt5 WebEngine examples.
 %description examples -l pl.UTF-8
 Przykłady do biblioteki Qt5 WebEngine.
 
+%package -n Qt5Pdf
+Summary:	The Qt5 Pdf library
+Summary(pl.UTF-8):	Biblioteka Qt5 Pdf
+Group:		Libraries
+Requires:	Qt5Core >= %{version}
+Requires:	Qt5Gui >= %{version}
+Requires:	Qt5Network >= %{version}
+Requires:	Qt5Qml >= %{version}
+Requires:	Qt5Widgets >= %{version}
+
+%description -n Qt5Pdf
+Qt5 Pdf module contains classes and functions for rendering PDF
+documents.
+
+%description -n Qt5Pdf -l pl.UTF-8
+Moduł Qt5 Pdf zawiera klasy i funkcje do renderowania dokumentów PDF.
+
+%package -n Qt5Pdf-devel
+Summary:	Qt5 Pdf library - development files
+Summary(pl.UTF-8):	Biblioteka Qt5 Pdf - pliki programistyczne
+Group:		Development/Libraries
+Requires:	Qt5Core-devel >= %{version}
+Requires:	Qt5Gui-devel >= %{version}
+Requires:	Qt5Network-devel >= %{version}
+Requires:	Qt5Pdf = %{version}-%{release}
+Requires:	Qt5Qml-devel >= %{version}
+Requires:	Qt5Widgets-devel >= %{version}
+
+%description -n Qt5Pdf-devel
+Qt5 Pdf library - development files.
+
+%description -n Qt5Pdf-devel -l pl.UTF-8
+Biblioteka Qt5 Pdf - pliki programistyczne.
+
 %prep
 %setup -q -n %{orgname}-everywhere-src-%{version}
 %ifarch x32
@@ -239,6 +283,9 @@ rm -rf $RPM_BUILD_ROOT
 %post	-n Qt5WebEngine -p /sbin/ldconfig
 %postun	-n Qt5WebEngine -p /sbin/ldconfig
 
+%post	-n Qt5Pdf -p /sbin/ldconfig
+%postun	-n Qt5Pdf -p /sbin/ldconfig
+
 %files -n Qt5WebEngine
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/libQt5WebEngine.so.*.*.*
@@ -299,3 +346,34 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 # XXX: dir shared with qt5-qtbase-examples
 %dir %{_examplesdir}/qt5
+
+%files -n Qt5Pdf
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_libdir}/libQt5Pdf.so.*.*.*
+%attr(755,root,root) %ghost %{_libdir}/libQt5Pdf.so.5
+%attr(755,root,root) %{_libdir}/libQt5PdfWidgets.so.*.*.*
+%attr(755,root,root) %ghost %{_libdir}/libQt5PdfWidgets.so.5
+%dir %{qt5dir}/qml/QtQuick/Pdf
+%{qt5dir}/qml/QtQuick/Pdf/plugins.qmltypes
+%{qt5dir}/qml/QtQuick/Pdf/qmldir
+%{qt5dir}/qml/QtQuick/Pdf/qml
+%attr(755,root,root) %{qt5dir}/qml/QtQuick/Pdf/libpdfplugin.so
+%attr(755,root,root) %{_libdir}/qt5/plugins/imageformats/libqpdf.so
+
+%files -n Qt5Pdf-devel
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_libdir}/libQt5Pdf.so
+%attr(755,root,root) %{_libdir}/libQt5PdfWidgets.so
+%{_libdir}/libQt5Pdf.prl
+%{_libdir}/libQt5PdfWidgets.prl
+%{_includedir}/qt5/QtPdf
+%{_includedir}/qt5/QtPdfWidgets
+%{_pkgconfigdir}/Qt5Pdf.pc
+%{_pkgconfigdir}/Qt5PdfWidgets.pc
+%{_libdir}/cmake/Qt5Gui/Qt5Gui_QPdfPlugin.cmake
+%{_libdir}/cmake/Qt5Pdf
+%{_libdir}/cmake/Qt5PdfWidgets
+%{qt5dir}/mkspecs/modules/qt_lib_pdf.pri
+%{qt5dir}/mkspecs/modules/qt_lib_pdf_private.pri
+%{qt5dir}/mkspecs/modules/qt_lib_pdfwidgets.pri
+%{qt5dir}/mkspecs/modules/qt_lib_pdfwidgets_private.pri
