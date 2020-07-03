@@ -8,7 +8,7 @@ Summary:	The Qt5 WebEngine library
 Summary(pl.UTF-8):	Biblioteka Qt5 WebEngine
 Name:		qt5-%{orgname}
 Version:	5.15.0
-Release:	2
+Release:	3
 License:	LGPL v3 or GPL v2+ or commercial
 Group:		X11/Libraries
 Source0:	http://download.qt.io/official_releases/qt/5.15/%{version}/submodules/%{orgname}-everywhere-src-%{version}.tar.xz
@@ -25,6 +25,7 @@ BuildRequires:	Qt5Positioning-devel >= %{version}
 BuildRequires:	Qt5PrintSupport-devel >= %{version}
 BuildRequires:	Qt5Qml-devel >= %{version}
 BuildRequires:	Qt5Quick-devel >= %{version}
+BuildRequires:	Qt5Svg-devel >= %{version}
 BuildRequires:	Qt5UiTools-devel >= %{version}
 BuildRequires:	Qt5WebChannel-devel >= %{version}
 BuildRequires:	Qt5WebSockets-devel >= %{version}
