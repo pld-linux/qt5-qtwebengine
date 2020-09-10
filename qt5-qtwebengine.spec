@@ -7,17 +7,13 @@
 Summary:	The Qt5 WebEngine library
 Summary(pl.UTF-8):	Biblioteka Qt5 WebEngine
 Name:		qt5-%{orgname}
-Version:	5.15.0
-Release:	6
+Version:	5.15.1
+Release:	1
 License:	LGPL v3 or GPL v2+ or commercial
 Group:		X11/Libraries
 Source0:	http://download.qt.io/official_releases/qt/5.15/%{version}/submodules/%{orgname}-everywhere-src-%{version}.tar.xz
-# Source0-md5:	738478b9409f8615ca0f63738b73bbae
+# Source0-md5:	e37c44664e8a55471b92b07695f7f7db
 Patch0:		x32.patch
-Patch1:		webauthn.patch
-Patch2:		bison-3.7.patch
-Patch3:		binutils-2.35.patch
-Patch4:		icu67.patch
 URL:		http://www.qt.io/
 BuildRequires:	Mesa-khrplatform-devel
 BuildRequires:	Qt5Core-devel >= %{version}
@@ -59,6 +55,7 @@ BuildRequires:	libxml2-devel
 BuildRequires:	libxslt-devel
 BuildRequires:	minizip-devel
 BuildRequires:	ninja
+BuildRequires:	nodejs
 BuildRequires:	nss-devel >= 3.26
 BuildRequires:	opus-devel >= 1.3.1
 BuildRequires:	pkgconfig
@@ -227,11 +224,6 @@ Biblioteka Qt5 Pdf - pliki programistyczne.
 %ifarch x32
 %patch0 -p1
 %endif
-%patch1 -p1
-%patch2 -p1
-%patch3 -p1
-cd ./src/3rdparty/chromium
-%patch4 -p2
 
 %build
 %ifarch x32
@@ -240,7 +232,10 @@ export V8_TARGET_ARCH="x32"
 qmake-qt5 -- \
 	-webengine-ffmpeg \
 	-webengine-icu \
-	-webengine-proprietary-codecs
+	-webengine-opus \
+	-webengine-proprietary-codecs \
+	-webengine-webp \
+	-webengine-webrtc
 %{?__jobs:NINJAJOBS="-j %__jobs"} \
 %{__make}
 %{?with_doc:%{__make} docs}
