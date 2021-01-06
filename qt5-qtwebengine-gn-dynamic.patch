@@ -1,0 +1,12 @@
+gn is modified (e.g. create_pri_file), so cannot use system version.
+At least link it dynamically.
+--- qtwebengine-everywhere-src-5.15.2/src/buildtools/gn.pro.orig	2020-11-07 02:22:36.000000000 +0100
++++ qtwebengine-everywhere-src-5.15.2/src/buildtools/gn.pro	2021-01-01 09:01:29.391918979 +0100
+@@ -19,6 +19,7 @@
+             gn_bootstrap = $$system_path($$absolute_path(gn/build/gen.py, $$src_3rd_party_dir))
+ 
+             gn_gen_args = --no-last-commit-position --out-path $$out_path \
++                          --no-static-libstdc++ \
+                           --cc \"$$which($$QMAKE_CC)\" --cxx \"$$which($$QMAKE_CXX)\" \
+                           --ld \"$$which($$QMAKE_LINK)\"
+ 

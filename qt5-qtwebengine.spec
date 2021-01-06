@@ -1,95 +1,106 @@
 #
 # Conditional build:
-%bcond_without	doc	# Documentation
+%bcond_without	doc		# documentation
 %bcond_without	system_libvpx	# Build with system libvpx
 
 %define		orgname		qtwebengine
+%define		qtbase_ver		%{version}
+%define		qtdeclarative_ver	%{version}
+%define		qtlocation_ver		%{version}
+%define		qtsvg_ver		%{version}
+%define		qttools_ver		%{version}
+%define		qtwebchannel_ver	%{version}
 Summary:	The Qt5 WebEngine library
 Summary(pl.UTF-8):	Biblioteka Qt5 WebEngine
 Name:		qt5-%{orgname}
 Version:	5.15.2
 Release:	2
-License:	LGPL v3 or GPL v2+ or commercial
+License:	LGPL v3 or GPL v2 or GPL v3 or commercial
 Group:		X11/Libraries
 Source0:	http://download.qt.io/official_releases/qt/5.15/%{version}/submodules/%{orgname}-everywhere-src-%{version}.tar.xz
 # Source0-md5:	c88cbe3158feb20c4feb3d54262feb23
 Patch0:		x32.patch
+Patch1:		%{name}-gn-dynamic.patch
 URL:		http://www.qt.io/
 BuildRequires:	Mesa-khrplatform-devel
-BuildRequires:	Qt5Core-devel >= %{version}
-BuildRequires:	Qt5Designer-devel >= %{version}
-BuildRequires:	Qt5Gui-devel >= %{version}
-BuildRequires:	Qt5Network-devel >= %{version}
-BuildRequires:	Qt5Positioning-devel >= %{version}
-BuildRequires:	Qt5PrintSupport-devel >= %{version}
-BuildRequires:	Qt5Qml-devel >= %{version}
-BuildRequires:	Qt5Quick-devel >= %{version}
-BuildRequires:	Qt5Svg-devel >= %{version}
-BuildRequires:	Qt5UiTools-devel >= %{version}
-BuildRequires:	Qt5WebChannel-devel >= %{version}
-BuildRequires:	Qt5WebSockets-devel >= %{version}
-BuildRequires:	Qt5Widgets-devel >= %{version}
+BuildRequires:	Qt5Core-devel >= %{qtbase_ver}
+BuildRequires:	Qt5Designer-devel >= %{qttools_ver}
+BuildRequires:	Qt5Gui-devel >= %{qtbase_ver}
+BuildRequires:	Qt5Network-devel >= %{qtbase_ver}
+BuildRequires:	Qt5Positioning-devel >= %{qtlocation_ver}
+BuildRequires:	Qt5PrintSupport-devel >= %{qtbase_ver}
+BuildRequires:	Qt5Qml-devel >= %{qtdeclarative_ver}
+BuildRequires:	Qt5Quick-devel >= %{qtdeclarative_ver}
+BuildRequires:	Qt5Svg-devel >= %{qtsvg_ver}
+BuildRequires:	Qt5UiTools-devel >= %{qttools_ver}
+BuildRequires:	Qt5WebChannel-devel >= %{qtwebchannel_ver}
+BuildRequires:	Qt5Widgets-devel >= %{qtbase_ver}
 BuildRequires:	alsa-lib-devel >= 1.0.10
 BuildRequires:	bison
 BuildRequires:	dbus-devel
+BuildRequires:	expat-devel
+# libavcodec libavformat libavutil
 BuildRequires:	ffmpeg-devel
 BuildRequires:	flex
 BuildRequires:	fontconfig-devel
-BuildRequires:	freetype-devel >= 2.4.2
+BuildRequires:	freetype-devel >= 1:2.4.2
 BuildRequires:	glib2-devel >= 1:2.32.0
-BuildRequires:	glibc-misc >= 2.17
+BuildRequires:	glibc-misc >= 6:2.17
+BuildRequires:	glibc-devel >= 6:2.17
 BuildRequires:	gperf
 BuildRequires:	harfbuzz-devel >= 2.2.0
-BuildRequires:	jsoncpp-devel
+# webengine-system-jsoncpp disabled in src/core/config/linux.pri
+#BuildRequires:	jsoncpp-devel
 BuildRequires:	lcms2-devel
 BuildRequires:	libdrm-devel
 BuildRequires:	libevent-devel
 BuildRequires:	libicu-devel >= 64
 BuildRequires:	libjpeg-devel
-BuildRequires:	libpng-devel >= 1.6.0
-BuildRequires:	libstdc++-devel
-BuildRequires:	libstdc++-static
+BuildRequires:	libpng-devel >= 2:1.6.0
+BuildRequires:	libstdc++-devel >= 6:5
 %{?with_system_libvpx:BuildRequires:	libvpx-devel >= 1.8.0}
 BuildRequires:	libwebp-devel
-BuildRequires:	libxml2-devel
-BuildRequires:	libxslt-devel
+BuildRequires:	libxcb-devel
+# need icu enabled to be accepted
+#BuildRequires:	libxml2-devel >= 2
+#BuildRequires:	libxslt-devel
 BuildRequires:	minizip-devel
 BuildRequires:	ninja
 BuildRequires:	nodejs
+BuildRequires:	nspr-devel
 BuildRequires:	nss-devel >= 3.26
 BuildRequires:	opus-devel >= 1.3.1
 BuildRequires:	pkgconfig
-BuildRequires:	poppler-cpp-devel
-BuildRequires:	protobuf-devel
+# checked by qt part, but no longer used by current chromium
+#BuildRequires:	poppler-cpp-devel
+# webengine-system-protobuf disabled in src/core/config/linux.pri
+#BuildRequires:	protobuf-devel
 BuildRequires:	pulseaudio-devel >= 0.9.10
-BuildRequires:	re2-devel
-BuildRequires:	snappy-devel
+BuildRequires:	python >= 1:2.7.5
 %if %{with doc}
 BuildRequires:	qt5-assistant >= %{version}
 %endif
 BuildRequires:	qt5-build >= %{version}
 BuildRequires:	qt5-qmake >= %{version}
-BuildRequires:	rpmbuild(macros) >= 1.654
+BuildRequires:	re2-devel
+BuildRequires:	rpmbuild(macros) >= 1.752
+BuildRequires:	snappy-devel
 BuildRequires:	tar >= 1:1.22
 BuildRequires:	xorg-lib-libX11-devel
+BuildRequires:	xorg-lib-libXScrnSaver-devel
 BuildRequires:	xorg-lib-libXcomposite-devel
 BuildRequires:	xorg-lib-libXcursor-devel
+BuildRequires:	xorg-lib-libXdamage-devel
+BuildRequires:	xorg-lib-libXext-devel
+BuildRequires:	xorg-lib-libXfixes-devel
 BuildRequires:	xorg-lib-libXi-devel
+BuildRequires:	xorg-lib-libXrender-devel
 BuildRequires:	xorg-lib-libXrandr-devel
 BuildRequires:	xorg-lib-libXtst-devel
 BuildRequires:	xorg-lib-libxkbcommon-devel
 BuildRequires:	xz
 BuildRequires:	zlib-devel
 BuildConflicts:	Qt5WebEngine-devel
-Requires:	alsa-lib >= 1.0.10
-Requires:	freetype >= 2.4.2
-Requires:	harfbuzz >= 2.2.0
-Requires:	libicu >= 64
-Requires:	libpng >= 1.6.0
-%{?with_system_libvpx:Requires:	libvpx >= 1.8.0}
-Requires:	nss >= 3.26
-Requires:	opus >= 1.3.1
-Requires:	pulseaudio-libs >= 0.9.10
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %define		specflags	-fno-strict-aliasing
@@ -114,9 +125,22 @@ Ten pakiet zawiera bibliotekę Qt5 WebEngine.
 Summary:	The Qt5 WebEngine library
 Summary(pl.UTF-8):	Biblioteka Qt5 WebEngine
 Group:		Libraries
-Requires:	Qt5Core >= %{version}
-Requires:	Qt5Network >= %{version}
-Requires:	Qt5Qml >= %{version}
+Requires:	Qt5Core >= %{qtbase_ver}
+Requires:	Qt5Gui >= %{qtbase_ver}
+Requires:	Qt5Network >= %{qtbase_ver}
+Requires:	Qt5Positioning >= %{qtlocation_ver}
+Requires:	Qt5Qml >= %{qtdeclarative_ver}
+Requires:	Qt5Quick >= %{qtdeclarative_ver}
+Requires:	Qt5WebChannel >= %{qtwebchannel_ver}
+Requires:	alsa-lib >= 1.0.10
+Requires:	freetype >= 1:2.4.2
+Requires:	harfbuzz >= 2.2.0
+Requires:	libicu >= 64
+Requires:	libpng >= 2:1.6.0
+%{?with_system_libvpx:Requires:	libvpx >= 1.8.0}
+Requires:	nss >= 3.26
+Requires:	opus >= 1.3.1
+Requires:	pulseaudio-libs >= 0.9.10
 
 %description -n Qt5WebEngine
 Qt5 WebEngine library provides seamless integration of C++ and QML
@@ -130,10 +154,16 @@ klientami w HTML-u/JavaScripcie.
 Summary:	Qt5 WebEngine library - development files
 Summary(pl.UTF-8):	Biblioteka Qt5 WebEngine - pliki programistyczne
 Group:		Development/Libraries
-Requires:	Qt5Core-devel >= %{version}
-Requires:	Qt5Network-devel >= %{version}
-Requires:	Qt5Qml-devel >= %{version}
+Requires:	Qt5Core-devel >= %{qtbase_ver}
+Requires:	Qt5Gui-devel >= %{qtbase_ver}
+Requires:	Qt5Network-devel >= %{qtbase_ver}
+Requires:	Qt5Positioning-devel >= %{qtlocation_ver}
+Requires:	Qt5PrintSupport-devel >= %{qtbase_ver}
+Requires:	Qt5Qml-devel >= %{qtdeclarative_ver}
+Requires:	Qt5Quick-devel >= %{qtdeclarative_ver}
+Requires:	Qt5WebChannel-devel >= %{qtwebchannel_ver}
 Requires:	Qt5WebEngine = %{version}-%{release}
+Requires:	Qt5Widgets-devel >= %{qtbase_ver}
 
 %description -n Qt5WebEngine-devel
 Qt5 WebEngine library - development files.
@@ -141,59 +171,16 @@ Qt5 WebEngine library - development files.
 %description -n Qt5WebEngine-devel -l pl.UTF-8
 Biblioteka Qt5 WebEngine - pliki programistyczne.
 
-%package doc
-Summary:	Qt5 WebEngine documentation in HTML format
-Summary(pl.UTF-8):	Dokumentacja do biblioteki Qt5 WebEngine w formacie HTML
-Group:		Documentation
-Requires:	qt5-doc-common >= %{version}
-%if "%{_rpmversion}" >= "5"
-BuildArch:	noarch
-%endif
-
-%description doc
-Qt5 WebEngine documentation in HTML format.
-
-%description doc -l pl.UTF-8
-Dokumentacja do biblioteki Qt5 WebEngine w formacie HTML.
-
-%package doc-qch
-Summary:	Qt5 WebEngine documentation in QCH format
-Summary(pl.UTF-8):	Dokumentacja do biblioteki Qt5 WebEngine w formacie QCH
-Group:		Documentation
-Requires:	qt5-doc-common >= %{version}
-%if "%{_rpmversion}" >= "5"
-BuildArch:	noarch
-%endif
-
-%description doc-qch
-Qt5 WebEngine documentation in QCH format.
-
-%description doc-qch -l pl.UTF-8
-Dokumentacja do biblioteki Qt5 WebEngine w formacie QCH.
-
-%package examples
-Summary:	Qt5 WebEngine examples
-Summary(pl.UTF-8):	Przykłady do biblioteki Qt5 WebEngine
-Group:		X11/Development/Libraries
-%if "%{_rpmversion}" >= "5"
-BuildArch:	noarch
-%endif
-
-%description examples
-Qt5 WebEngine examples.
-
-%description examples -l pl.UTF-8
-Przykłady do biblioteki Qt5 WebEngine.
-
 %package -n Qt5Pdf
 Summary:	The Qt5 Pdf library
 Summary(pl.UTF-8):	Biblioteka Qt5 Pdf
 Group:		Libraries
-Requires:	Qt5Core >= %{version}
-Requires:	Qt5Gui >= %{version}
-Requires:	Qt5Network >= %{version}
-Requires:	Qt5Qml >= %{version}
-Requires:	Qt5Widgets >= %{version}
+Requires:	Qt5Core >= %{qtbase_ver}
+Requires:	Qt5Gui >= %{qtbase_ver}
+Requires:	Qt5Network >= %{qtbase_ver}
+Requires:	Qt5Qml >= %{qtdeclarative_ver}
+Requires:	Qt5Quick >= %{qtdeclarative_ver}
+Requires:	Qt5Widgets >= %{qtbase_ver}
 
 %description -n Qt5Pdf
 Qt5 Pdf module contains classes and functions for rendering PDF
@@ -206,12 +193,10 @@ Moduł Qt5 Pdf zawiera klasy i funkcje do renderowania dokumentów PDF.
 Summary:	Qt5 Pdf library - development files
 Summary(pl.UTF-8):	Biblioteka Qt5 Pdf - pliki programistyczne
 Group:		Development/Libraries
-Requires:	Qt5Core-devel >= %{version}
-Requires:	Qt5Gui-devel >= %{version}
-Requires:	Qt5Network-devel >= %{version}
+Requires:	Qt5Core-devel >= %{qtbase_ver}
+Requires:	Qt5Gui-devel >= %{qtbase_ver}
 Requires:	Qt5Pdf = %{version}-%{release}
-Requires:	Qt5Qml-devel >= %{version}
-Requires:	Qt5Widgets-devel >= %{version}
+Requires:	Qt5Widgets-devel >= %{qtbase_ver}
 
 %description -n Qt5Pdf-devel
 Qt5 Pdf library - development files.
@@ -219,11 +204,53 @@ Qt5 Pdf library - development files.
 %description -n Qt5Pdf-devel -l pl.UTF-8
 Biblioteka Qt5 Pdf - pliki programistyczne.
 
+%package doc
+Summary:	Qt5 WebEngine documentation in HTML format
+Summary(pl.UTF-8):	Dokumentacja do biblioteki Qt5 WebEngine w formacie HTML
+License:	FDL v1.3
+Group:		Documentation
+Requires:	qt5-doc-common >= %{version}
+%{?noarchpackage}
+
+%description doc
+Qt5 WebEngine documentation in HTML format.
+
+%description doc -l pl.UTF-8
+Dokumentacja do biblioteki Qt5 WebEngine w formacie HTML.
+
+%package doc-qch
+Summary:	Qt5 WebEngine documentation in QCH format
+Summary(pl.UTF-8):	Dokumentacja do biblioteki Qt5 WebEngine w formacie QCH
+License:	FDL v1.3
+Group:		Documentation
+Requires:	qt5-doc-common >= %{version}
+%{?noarchpackage}
+
+%description doc-qch
+Qt5 WebEngine documentation in QCH format.
+
+%description doc-qch -l pl.UTF-8
+Dokumentacja do biblioteki Qt5 WebEngine w formacie QCH.
+
+%package examples
+Summary:	Qt5 WebEngine examples
+Summary(pl.UTF-8):	Przykłady do biblioteki Qt5 WebEngine
+License:	BSD or commercial
+Group:		X11/Development/Libraries
+%{?noarchpackage}
+
+%description examples
+Qt5 WebEngine examples.
+
+%description examples -l pl.UTF-8
+Przykłady do biblioteki Qt5 WebEngine.
+
 %prep
 %setup -q -n %{orgname}-everywhere-src-%{version}
 %ifarch x32
 %patch0 -p1
 %endif
+%patch1 -p1
 
 %build
 %ifarch x32
@@ -236,12 +263,14 @@ qmake-qt5 -- \
 	-webengine-proprietary-codecs \
 	-webengine-webp \
 	-webengine-webrtc
+
 %{?__jobs:NINJAJOBS="-j %__jobs"} \
 %{__make}
 %{?with_doc:%{__make} docs}
 
 %install
 rm -rf $RPM_BUILD_ROOT
+
 %{__make} install \
 	INSTALL_ROOT=$RPM_BUILD_ROOT
 
@@ -254,6 +283,8 @@ rm -rf $RPM_BUILD_ROOT
 %{__rm} $RPM_BUILD_ROOT%{_libdir}/libQt5*.so.5.??
 # actually drop *.la, follow policy of not packaging them when *.pc exist
 %{__rm} $RPM_BUILD_ROOT%{_libdir}/libQt5*.la
+# misnamed?
+%{__rm} $RPM_BUILD_ROOT%{_libdir}/Qt5WebEngineCore.la
 
 # Prepare some files list
 ifecho() {
@@ -278,6 +309,8 @@ ifecho_tree() {
 }
 
 echo "%defattr(644,root,root,755)" > examples.files
+ifecho_tree examples %{_examplesdir}/qt5/pdf
+ifecho_tree examples %{_examplesdir}/qt5/pdfwidgets
 ifecho_tree examples %{_examplesdir}/qt5/webengine
 ifecho_tree examples %{_examplesdir}/qt5/webenginewidgets
 
@@ -292,10 +325,14 @@ rm -rf $RPM_BUILD_ROOT
 
 %files -n Qt5WebEngine
 %defattr(644,root,root,755)
+%doc LICENSE.Chromium LICENSE.GPL3-EXCEPT dist/changes-*
+# R: Qt5Core Qt5Gui Qt5Network Qt5Qml Qt5Quick Qt5WebChannel Qt5WebEngineCore
 %attr(755,root,root) %{_libdir}/libQt5WebEngine.so.*.*.*
 %attr(755,root,root) %ghost %{_libdir}/libQt5WebEngine.so.5
+# R: Qt5Core Qt5Gui Qt5Network Qt5Positioning Qt5Qml Qt5Quick Qt5WebChannel alsa-lib dbus-libs expat fontconfig freetype harfbuzz lcms2 libX11 libXcomposite libXcursor libXdamage libXext libXfixes libXi libXrender libXrandr libXss libavcodec libavformat libavutil libevent libjpeg libicu libpng libvpx libwebp libxcb minizip nspr nss opus re2 snappy zlib
 %attr(755,root,root) %{_libdir}/libQt5WebEngineCore.so.*.*.*
 %attr(755,root,root) %ghost %{_libdir}/libQt5WebEngineCore.so.5
+# R: Qt5Core Qt5Gui Qt5Network Qt5PrintSupport Qt5Quick Qt5QuickWidgets Qt5WebEngineCore Qt5Widgets
 %attr(755,root,root) %{_libdir}/libQt5WebEngineWidgets.so.*.*.*
 %attr(755,root,root) %ghost %{_libdir}/libQt5WebEngineWidgets.so.5
 %dir %{qt5dir}/qml/QtWebEngine
@@ -303,11 +340,69 @@ rm -rf $RPM_BUILD_ROOT
 %{qt5dir}/qml/QtWebEngine/qmldir
 %{qt5dir}/qml/QtWebEngine/Controls1Delegates
 %{qt5dir}/qml/QtWebEngine/Controls2Delegates
+# R: Qt5Core Qt5Qml Qt5Quick Qt5WebEngine Qt5WebEngineCore
 %attr(755,root,root) %{qt5dir}/qml/QtWebEngine/libqtwebengineplugin.so
 %dir %{_datadir}/qt5/resources
 %{_datadir}/qt5/resources/qtwebengine*.pak
+%dir %{_datadir}/qt5/translations/qtwebengine_locales
+%lang(am) %{_datadir}/qt5/translations/qtwebengine_locales/am.pak
+%lang(ar) %{_datadir}/qt5/translations/qtwebengine_locales/ar.pak
+%lang(bg) %{_datadir}/qt5/translations/qtwebengine_locales/bg.pak
+%lang(bn) %{_datadir}/qt5/translations/qtwebengine_locales/bn.pak
+%lang(ca) %{_datadir}/qt5/translations/qtwebengine_locales/ca.pak
+%lang(cs) %{_datadir}/qt5/translations/qtwebengine_locales/cs.pak
+%lang(da) %{_datadir}/qt5/translations/qtwebengine_locales/da.pak
+%lang(de) %{_datadir}/qt5/translations/qtwebengine_locales/de.pak
+%lang(el) %{_datadir}/qt5/translations/qtwebengine_locales/el.pak
+%lang(en) %{_datadir}/qt5/translations/qtwebengine_locales/en-GB.pak
+%lang(en) %{_datadir}/qt5/translations/qtwebengine_locales/en-US.pak
+%lang(es) %{_datadir}/qt5/translations/qtwebengine_locales/es.pak
+%lang(es_AR,es_BO,es_CL,es_CO,es_CR,es_CU,es_DO,es_EC,es_GT,es_HN,es_MX,es_NI,es_PA,es_PE,es_PR,es_PY,es_SV,es_UY,es_VE) %{_datadir}/qt5/translations/qtwebengine_locales/es-419.pak
+%lang(et) %{_datadir}/qt5/translations/qtwebengine_locales/et.pak
+%lang(fa) %{_datadir}/qt5/translations/qtwebengine_locales/fa.pak
+%lang(fi) %{_datadir}/qt5/translations/qtwebengine_locales/fi.pak
+%lang(fil) %{_datadir}/qt5/translations/qtwebengine_locales/fil.pak
+%lang(fr) %{_datadir}/qt5/translations/qtwebengine_locales/fr.pak
+%lang(gu) %{_datadir}/qt5/translations/qtwebengine_locales/gu.pak
+%lang(he) %{_datadir}/qt5/translations/qtwebengine_locales/he.pak
+%lang(hi) %{_datadir}/qt5/translations/qtwebengine_locales/hi.pak
+%lang(hr) %{_datadir}/qt5/translations/qtwebengine_locales/hr.pak
+%lang(hu) %{_datadir}/qt5/translations/qtwebengine_locales/hu.pak
+%lang(id) %{_datadir}/qt5/translations/qtwebengine_locales/id.pak
+%lang(it) %{_datadir}/qt5/translations/qtwebengine_locales/it.pak
+%lang(ja) %{_datadir}/qt5/translations/qtwebengine_locales/ja.pak
+%lang(kn) %{_datadir}/qt5/translations/qtwebengine_locales/kn.pak
+%lang(ko) %{_datadir}/qt5/translations/qtwebengine_locales/ko.pak
+%lang(lt) %{_datadir}/qt5/translations/qtwebengine_locales/lt.pak
+%lang(lv) %{_datadir}/qt5/translations/qtwebengine_locales/lv.pak
+%lang(ml) %{_datadir}/qt5/translations/qtwebengine_locales/ml.pak
+%lang(mr) %{_datadir}/qt5/translations/qtwebengine_locales/mr.pak
+%lang(ms) %{_datadir}/qt5/translations/qtwebengine_locales/ms.pak
+%lang(nb) %{_datadir}/qt5/translations/qtwebengine_locales/nb.pak
+%lang(nl) %{_datadir}/qt5/translations/qtwebengine_locales/nl.pak
+%lang(pl) %{_datadir}/qt5/translations/qtwebengine_locales/pl.pak
+%lang(pt_BR) %{_datadir}/qt5/translations/qtwebengine_locales/pt-BR.pak
+%lang(pt) %{_datadir}/qt5/translations/qtwebengine_locales/pt-PT.pak
+%lang(ro) %{_datadir}/qt5/translations/qtwebengine_locales/ro.pak
+%lang(ru) %{_datadir}/qt5/translations/qtwebengine_locales/ru.pak
+%lang(sk) %{_datadir}/qt5/translations/qtwebengine_locales/sk.pak
+%lang(sl) %{_datadir}/qt5/translations/qtwebengine_locales/sl.pak
+%lang(sr) %{_datadir}/qt5/translations/qtwebengine_locales/sr.pak
+%lang(sv) %{_datadir}/qt5/translations/qtwebengine_locales/sv.pak
+%lang(sw) %{_datadir}/qt5/translations/qtwebengine_locales/sw.pak
+%lang(ta) %{_datadir}/qt5/translations/qtwebengine_locales/ta.pak
+%lang(te) %{_datadir}/qt5/translations/qtwebengine_locales/te.pak
+%lang(th) %{_datadir}/qt5/translations/qtwebengine_locales/th.pak
+%lang(tr) %{_datadir}/qt5/translations/qtwebengine_locales/tr.pak
+%lang(uk) %{_datadir}/qt5/translations/qtwebengine_locales/uk.pak
+%lang(vi) %{_datadir}/qt5/translations/qtwebengine_locales/vi.pak
+%lang(zh_CN) %{_datadir}/qt5/translations/qtwebengine_locales/zh-CN.pak
+%lang(zh_TW) %{_datadir}/qt5/translations/qtwebengine_locales/zh-TW.pak
+# R: Qt5Core libevent libicu
 %attr(755,root,root)  %{_libdir}/qt5/bin/qwebengine_convert_dict
+# R: Qt5Core Qt5WebEngineCore
 %attr(755,root,root) %{_libdir}/qt5/libexec/QtWebEngineProcess
+# R: Qt5Core Qt5Gui Qt5WebEngineWidgets Qt5Widgets [+Qt5Designer by dir]
 %attr(755,root,root) %{_libdir}/qt5/plugins/designer/libqwebengineview.so
 
 %files -n Qt5WebEngine-devel
@@ -336,32 +431,21 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/qt5/mkspecs/modules/qt_lib_webenginewidgets.pri
 %{_libdir}/qt5/mkspecs/modules/qt_lib_webenginewidgets_private.pri
 
-%if %{with doc}
-%files doc
-%defattr(644,root,root,755)
-%{_docdir}/qt5-doc/qtwebengine
-
-%files doc-qch
-%defattr(644,root,root,755)
-%{_docdir}/qt5-doc/qtwebengine.qch
-%endif
-
-%files examples -f examples.files
-%defattr(644,root,root,755)
-# XXX: dir shared with qt5-qtbase-examples
-%dir %{_examplesdir}/qt5
-
 %files -n Qt5Pdf
 %defattr(644,root,root,755)
+# R: Qt5Core Qt5Gui Qt5Network freetype libjpeg zlib
 %attr(755,root,root) %{_libdir}/libQt5Pdf.so.*.*.*
 %attr(755,root,root) %ghost %{_libdir}/libQt5Pdf.so.5
+# R: Qt5Core Qt5Gui Qt5Pdf Qt5Widgets
 %attr(755,root,root) %{_libdir}/libQt5PdfWidgets.so.*.*.*
 %attr(755,root,root) %ghost %{_libdir}/libQt5PdfWidgets.so.5
 %dir %{qt5dir}/qml/QtQuick/Pdf
 %{qt5dir}/qml/QtQuick/Pdf/plugins.qmltypes
 %{qt5dir}/qml/QtQuick/Pdf/qmldir
 %{qt5dir}/qml/QtQuick/Pdf/qml
+# R: Qt5Core Qt5Gui Qt5Pdf Qt5Qml Qt5Quick
 %attr(755,root,root) %{qt5dir}/qml/QtQuick/Pdf/libpdfplugin.so
+# R: Qt5Core Qt5Gui Qt5Pdf
 %attr(755,root,root) %{_libdir}/qt5/plugins/imageformats/libqpdf.so
 
 %files -n Qt5Pdf-devel
@@ -381,3 +465,20 @@ rm -rf $RPM_BUILD_ROOT
 %{qt5dir}/mkspecs/modules/qt_lib_pdf_private.pri
 %{qt5dir}/mkspecs/modules/qt_lib_pdfwidgets.pri
 %{qt5dir}/mkspecs/modules/qt_lib_pdfwidgets_private.pri
+
+%if %{with doc}
+%files doc
+%defattr(644,root,root,755)
+%{_docdir}/qt5-doc/qtpdf
+%{_docdir}/qt5-doc/qtwebengine
+
+%files doc-qch
+%defattr(644,root,root,755)
+%{_docdir}/qt5-doc/qtpdf.qch
+%{_docdir}/qt5-doc/qtwebengine.qch
+%endif
+
+%files examples -f examples.files
+%defattr(644,root,root,755)
+# XXX: dir shared with qt5-qtbase-examples
+%dir %{_examplesdir}/qt5
