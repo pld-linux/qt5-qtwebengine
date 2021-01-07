@@ -14,14 +14,14 @@ Summary:	The Qt5 WebEngine library
 Summary(pl.UTF-8):	Biblioteka Qt5 WebEngine
 Name:		qt5-%{orgname}
 Version:	5.15.2
-Release:	2
+Release:	3
 License:	LGPL v3 or GPL v2 or GPL v3 or commercial
 Group:		X11/Libraries
 Source0:	http://download.qt.io/official_releases/qt/5.15/%{version}/submodules/%{orgname}-everywhere-src-%{version}.tar.xz
 # Source0-md5:	c88cbe3158feb20c4feb3d54262feb23
 Patch0:		x32.patch
 Patch1:		%{name}-gn-dynamic.patch
-URL:		http://www.qt.io/
+URL:		https://www.qt.io/
 BuildRequires:	Mesa-khrplatform-devel
 BuildRequires:	Qt5Core-devel >= %{qtbase_ver}
 BuildRequires:	Qt5Designer-devel >= %{qttools_ver}
@@ -203,6 +203,22 @@ Qt5 Pdf library - development files.
 
 %description -n Qt5Pdf-devel -l pl.UTF-8
 Biblioteka Qt5 Pdf - pliki programistyczne.
+
+%package -n Qt5Designer-plugin-qwebengineview
+Summary:	QWebEngineView plugin for Qt5 Designer
+Summary(pl.UTF-8):	Wtyczka QWebEngineView dla Qt5 Designera
+Group:		X11/Libraries
+Requires:	Qt5Core >= %{qtbase_ver}
+Requires:	Qt5Gui >= %{qtbase_ver}
+Requires:	Qt5Designer >= %{qttools_ver}
+Requires:	Qt5WebEngine = %{version}-%{release}
+Requires:	Qt5Widgets >= %{qtbase_ver}
+
+%description -n Qt5Designer-plugin-qwebengineview
+QWebEngineView plugin for Qt5 Designer.
+
+%description -n Qt5Designer-plugin-qwebengineview -l pl.UTF-8
+Wtyczka QWebEngineView dla Qt5 Designera.
 
 %package doc
 Summary:	Qt5 WebEngine documentation in HTML format
@@ -402,8 +418,6 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root)  %{_libdir}/qt5/bin/qwebengine_convert_dict
 # R: Qt5Core Qt5WebEngineCore
 %attr(755,root,root) %{_libdir}/qt5/libexec/QtWebEngineProcess
-# R: Qt5Core Qt5Gui Qt5WebEngineWidgets Qt5Widgets [+Qt5Designer by dir]
-%attr(755,root,root) %{_libdir}/qt5/plugins/designer/libqwebengineview.so
 
 %files -n Qt5WebEngine-devel
 %defattr(644,root,root,755)
@@ -422,7 +436,6 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/cmake/Qt5WebEngine
 %{_libdir}/cmake/Qt5WebEngineCore
 %{_libdir}/cmake/Qt5WebEngineWidgets
-%{_libdir}/cmake/Qt5Designer/Qt5Designer_QWebEngineViewPlugin.cmake
 %{qt5dir}/mkspecs/modules/qt_lib_webengine.pri
 %{qt5dir}/mkspecs/modules/qt_lib_webengine_private.pri
 %{_libdir}/qt5/mkspecs/modules/qt_lib_webenginecore.pri
@@ -430,6 +443,12 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/qt5/mkspecs/modules/qt_lib_webenginecoreheaders_private.pri
 %{_libdir}/qt5/mkspecs/modules/qt_lib_webenginewidgets.pri
 %{_libdir}/qt5/mkspecs/modules/qt_lib_webenginewidgets_private.pri
+
+%files -n Qt5Designer-plugin-qwebengineview
+%defattr(644,root,root,755)
+# R: Qt5Core Qt5Gui Qt5WebEngineWidgets Qt5Widgets [+Qt5Designer by dir]
+%attr(755,root,root) %{_libdir}/qt5/plugins/designer/libqwebengineview.so
+%{_libdir}/cmake/Qt5Designer/Qt5Designer_QWebEngineViewPlugin.cmake
 
 %files -n Qt5Pdf
 %defattr(644,root,root,755)
