@@ -4,12 +4,12 @@
 %bcond_without	system_libvpx	# Build with system libvpx
 
 %define		orgname		qtwebengine
-%define		qtbase_ver		%{version}
-%define		qtdeclarative_ver	%{version}
-%define		qtlocation_ver		%{version}
-%define		qtsvg_ver		%{version}
-%define		qttools_ver		%{version}
-%define		qtwebchannel_ver	%{version}
+%define		qtbase_ver		5.15
+%define		qtdeclarative_ver	5.15
+%define		qtlocation_ver		5.15
+%define		qtsvg_ver		5.15
+%define		qttools_ver		5.15
+%define		qtwebchannel_ver	5.15
 Summary:	The Qt5 WebEngine library
 Summary(pl.UTF-8):	Biblioteka Qt5 WebEngine
 Name:		qt5-%{orgname}
@@ -78,10 +78,10 @@ BuildRequires:	pkgconfig
 BuildRequires:	pulseaudio-devel >= 0.9.10
 BuildRequires:	python >= 1:2.7.5
 %if %{with doc}
-BuildRequires:	qt5-assistant >= %{version}
+BuildRequires:	qt5-assistant >= 5.15
 %endif
-BuildRequires:	qt5-build >= %{version}
-BuildRequires:	qt5-qmake >= %{version}
+BuildRequires:	qt5-build >= 5.15
+BuildRequires:	qt5-qmake >= 5.15
 BuildRequires:	re2-devel
 BuildRequires:	rpmbuild(macros) >= 1.752
 BuildRequires:	snappy-devel
@@ -125,13 +125,13 @@ Ten pakiet zawiera bibliotekę Qt5 WebEngine.
 Summary:	The Qt5 WebEngine library
 Summary(pl.UTF-8):	Biblioteka Qt5 WebEngine
 Group:		Libraries
-Requires:	Qt5Core >= %{qtbase_ver}
-Requires:	Qt5Gui >= %{qtbase_ver}
-Requires:	Qt5Network >= %{qtbase_ver}
-Requires:	Qt5Positioning >= %{qtlocation_ver}
-Requires:	Qt5Qml >= %{qtdeclarative_ver}
-Requires:	Qt5Quick >= %{qtdeclarative_ver}
-Requires:	Qt5WebChannel >= %{qtwebchannel_ver}
+%requires_ge_to	Qt5Core Qt5Core-devel
+%requires_ge_to	Qt5Gui Qt5Gui-devel
+%requires_ge_to	Qt5Network Qt5Network-devel
+%requires_ge_to	Qt5Positioning Qt5Positioning-devel
+%requires_ge_to	Qt5Qml Qt5Qml-devel
+%requires_ge_to	Qt5Quick Qt5Quick-devel
+%requires_ge_to	Qt5WebChannel Qt5WebChannel-devel
 Requires:	alsa-lib >= 1.0.10
 Requires:	freetype >= 1:2.4.2
 Requires:	harfbuzz >= 2.2.0
@@ -154,16 +154,16 @@ klientami w HTML-u/JavaScripcie.
 Summary:	Qt5 WebEngine library - development files
 Summary(pl.UTF-8):	Biblioteka Qt5 WebEngine - pliki programistyczne
 Group:		Development/Libraries
-Requires:	Qt5Core-devel >= %{qtbase_ver}
-Requires:	Qt5Gui-devel >= %{qtbase_ver}
-Requires:	Qt5Network-devel >= %{qtbase_ver}
-Requires:	Qt5Positioning-devel >= %{qtlocation_ver}
-Requires:	Qt5PrintSupport-devel >= %{qtbase_ver}
-Requires:	Qt5Qml-devel >= %{qtdeclarative_ver}
-Requires:	Qt5Quick-devel >= %{qtdeclarative_ver}
-Requires:	Qt5WebChannel-devel >= %{qtwebchannel_ver}
+%requires_ge	Qt5Core-devel
+%requires_ge	Qt5Gui-devel
+%requires_ge	Qt5Network-devel
+%requires_ge	Qt5Positioning-devel
+%requires_ge	Qt5PrintSupport-devel
+%requires_ge	Qt5Qml-devel
+%requires_ge	Qt5Quick-devel
+%requires_ge	Qt5WebChannel-devel
 Requires:	Qt5WebEngine = %{version}-%{release}
-Requires:	Qt5Widgets-devel >= %{qtbase_ver}
+%requires_ge	Qt5Widgets-devel
 
 %description -n Qt5WebEngine-devel
 Qt5 WebEngine library - development files.
@@ -175,12 +175,12 @@ Biblioteka Qt5 WebEngine - pliki programistyczne.
 Summary:	The Qt5 Pdf library
 Summary(pl.UTF-8):	Biblioteka Qt5 Pdf
 Group:		Libraries
-Requires:	Qt5Core >= %{qtbase_ver}
-Requires:	Qt5Gui >= %{qtbase_ver}
-Requires:	Qt5Network >= %{qtbase_ver}
-Requires:	Qt5Qml >= %{qtdeclarative_ver}
-Requires:	Qt5Quick >= %{qtdeclarative_ver}
-Requires:	Qt5Widgets >= %{qtbase_ver}
+%requires_ge_to	Qt5Core Qt5Core-devel
+%requires_ge_to	Qt5Gui Qt5Gui-devel
+%requires_ge_to	Qt5Network Qt5Network-devel
+%requires_ge_to	Qt5Qml Qt5Qml-devel
+%requires_ge_to	Qt5Quick Qt5Quick-devel
+%requires_ge_to	Qt5Widgets Qt5Widgets-devel
 
 %description -n Qt5Pdf
 Qt5 Pdf module contains classes and functions for rendering PDF
@@ -193,10 +193,10 @@ Moduł Qt5 Pdf zawiera klasy i funkcje do renderowania dokumentów PDF.
 Summary:	Qt5 Pdf library - development files
 Summary(pl.UTF-8):	Biblioteka Qt5 Pdf - pliki programistyczne
 Group:		Development/Libraries
-Requires:	Qt5Core-devel >= %{qtbase_ver}
-Requires:	Qt5Gui-devel >= %{qtbase_ver}
+%requires_ge	Qt5Core-devel
+%requires_ge	Qt5Gui-devel
 Requires:	Qt5Pdf = %{version}-%{release}
-Requires:	Qt5Widgets-devel >= %{qtbase_ver}
+%requires_ge	Qt5Widgets-devel
 
 %description -n Qt5Pdf-devel
 Qt5 Pdf library - development files.
@@ -208,11 +208,11 @@ Biblioteka Qt5 Pdf - pliki programistyczne.
 Summary:	QWebEngineView plugin for Qt5 Designer
 Summary(pl.UTF-8):	Wtyczka QWebEngineView dla Qt5 Designera
 Group:		X11/Libraries
-Requires:	Qt5Core >= %{qtbase_ver}
-Requires:	Qt5Gui >= %{qtbase_ver}
-Requires:	Qt5Designer >= %{qttools_ver}
+%requires_ge_to	Qt5Core Qt5Core-devel
+%requires_ge_to	Qt5Gui Qt5Gui-devel
+%requires_ge_to	Qt5Designer Qt5Designer-devel
 Requires:	Qt5WebEngine = %{version}-%{release}
-Requires:	Qt5Widgets >= %{qtbase_ver}
+%requires_ge_to	Qt5Widgets Qt5Widgets-devel
 
 %description -n Qt5Designer-plugin-qwebengineview
 QWebEngineView plugin for Qt5 Designer.
@@ -225,7 +225,7 @@ Summary:	Qt5 WebEngine documentation in HTML format
 Summary(pl.UTF-8):	Dokumentacja do biblioteki Qt5 WebEngine w formacie HTML
 License:	FDL v1.3
 Group:		Documentation
-Requires:	qt5-doc-common >= %{version}
+%requires_ge_to		qt5-doc-common Qt5Core-devel
 BuildArch:	noarch
 
 %description doc
@@ -239,7 +239,7 @@ Summary:	Qt5 WebEngine documentation in QCH format
 Summary(pl.UTF-8):	Dokumentacja do biblioteki Qt5 WebEngine w formacie QCH
 License:	FDL v1.3
 Group:		Documentation
-Requires:	qt5-doc-common >= %{version}
+%requires_ge_to		qt5-doc-common Qt5Core-devel
 BuildArch:	noarch
 
 %description doc-qch
