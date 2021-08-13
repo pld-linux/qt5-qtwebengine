@@ -13,14 +13,16 @@
 Summary:	The Qt5 WebEngine library
 Summary(pl.UTF-8):	Biblioteka Qt5 WebEngine
 Name:		qt5-%{orgname}
-Version:	5.15.2
-Release:	3
+Version:	5.15.5
+Release:	1
 License:	LGPL v3 or GPL v2 or GPL v3 or commercial
 Group:		X11/Libraries
-Source0:	http://download.qt.io/official_releases/qt/5.15/%{version}/submodules/%{orgname}-everywhere-src-%{version}.tar.xz
-# Source0-md5:	c88cbe3158feb20c4feb3d54262feb23
+Source0:	qtwebengine-%{version}.tar.xz
+# Source0-md5:	ef8a67c66f2e59d349c3590a3ef41615
 Patch0:		x32.patch
 Patch1:		%{name}-gn-dynamic.patch
+Patch2:		icu.patch
+Patch3:		glibc-2.33.patch
 URL:		https://www.qt.io/
 BuildRequires:	Mesa-khrplatform-devel
 BuildRequires:	Qt5Core-devel >= %{qtbase_ver}
@@ -105,6 +107,8 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %define		specflags	-fno-strict-aliasing
 %define		qt5dir		%{_libdir}/qt5
+
+%define		qt5bindir	%(qtpaths-qt5 --binaries-dir)
 
 %description
 Qt is a cross-platform application and UI framework. Using Qt, you can
@@ -262,17 +266,21 @@ Qt5 WebEngine examples.
 Przykłady do biblioteki Qt5 WebEngine.
 
 %prep
-%setup -q -n %{orgname}-everywhere-src-%{version}
+%setup -q -n qtwebengine
 %ifarch x32
 %patch0 -p1
 %endif
 %patch1 -p1
+%patch2 -p1
+%patch3 -p1
+
+%{qt5bindir}/syncqt.pl -version %{version}
 
 %build
 %ifarch x32
 export V8_TARGET_ARCH="x32"
 %endif
-qmake-qt5 -- \
+qmake-qt5 CONFIG+=use_gold_linker -- \
 	-webengine-ffmpeg \
 	-webengine-icu \
 	-webengine-opus \
