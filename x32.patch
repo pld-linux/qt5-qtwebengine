@@ -1,8 +1,68 @@
-diff -ur qtwebengine-everywhere-src-5.11.1/src/3rdparty/chromium/build/config/compiler/BUILD.gn qtwebengine-everywhere-src-5.11.1-x32/src/3rdparty/chromium/build/config/compiler/BUILD.gn
---- qtwebengine-everywhere-src-5.11.1/src/3rdparty/chromium/build/config/compiler/BUILD.gn	2018-06-15 09:47:20.000000000 +0200
-+++ qtwebengine-everywhere-src-5.11.1-x32/src/3rdparty/chromium/build/config/compiler/BUILD.gn	2018-08-13 01:44:53.799249439 +0200
-@@ -661,14 +661,7 @@
-   if (is_posix && !(is_mac || is_ios)) {
+diff -urNp -x '*.orig' qtwebengine.org/src/3rdparty/chromium/base/allocator/partition_allocator/address_space_randomization.cc qtwebengine/src/3rdparty/chromium/base/allocator/partition_allocator/address_space_randomization.cc
+--- qtwebengine.org/src/3rdparty/chromium/base/allocator/partition_allocator/address_space_randomization.cc	2021-08-13 12:36:55.000000000 +0200
++++ qtwebengine/src/3rdparty/chromium/base/allocator/partition_allocator/address_space_randomization.cc	2021-08-14 11:13:23.606971650 +0200
+@@ -21,7 +21,7 @@ namespace base {
+ void* GetRandomPageBase() {
+   uintptr_t random = static_cast<uintptr_t>(RandomValue());
+ 
+-#if defined(ARCH_CPU_64_BITS)
++#if defined(ARCH_CPU_64_BITS) && !defined(__ILP32__)
+   random <<= 32ULL;
+   random |= static_cast<uintptr_t>(RandomValue());
+ 
+diff -urNp -x '*.orig' qtwebengine.org/src/3rdparty/chromium/base/debug/stack_trace_posix.cc qtwebengine/src/3rdparty/chromium/base/debug/stack_trace_posix.cc
+--- qtwebengine.org/src/3rdparty/chromium/base/debug/stack_trace_posix.cc	2021-08-13 12:36:55.000000000 +0200
++++ qtwebengine/src/3rdparty/chromium/base/debug/stack_trace_posix.cc	2021-08-14 11:13:23.606971650 +0200
+@@ -351,7 +351,7 @@ void StackDumpSignalHandler(int signal,
+     const char* label;
+     greg_t value;
+   } registers[] = {
+-#if ARCH_CPU_32_BITS
++#if ARCH_CPU_32_BITS && !defined(__ILP32__)
+     { "  gs: ", context->uc_mcontext.gregs[REG_GS] },
+     { "  fs: ", context->uc_mcontext.gregs[REG_FS] },
+     { "  es: ", context->uc_mcontext.gregs[REG_ES] },
+@@ -371,7 +371,7 @@ void StackDumpSignalHandler(int signal,
+     { " efl: ", context->uc_mcontext.gregs[REG_EFL] },
+     { " usp: ", context->uc_mcontext.gregs[REG_UESP] },
+     { "  ss: ", context->uc_mcontext.gregs[REG_SS] },
+-#elif ARCH_CPU_64_BITS
++#elif ARCH_CPU_64_BITS || defined(__ILP32__)
+     { "  r8: ", context->uc_mcontext.gregs[REG_R8] },
+     { "  r9: ", context->uc_mcontext.gregs[REG_R9] },
+     { " r10: ", context->uc_mcontext.gregs[REG_R10] },
+@@ -398,9 +398,9 @@ void StackDumpSignalHandler(int signal,
+ #endif  // ARCH_CPU_32_BITS
+   };
+ 
+-#if ARCH_CPU_32_BITS
++#if ARCH_CPU_32_BITS && !defined(__ILP32__)
+   const int kRegisterPadding = 8;
+-#elif ARCH_CPU_64_BITS
++#elif ARCH_CPU_64_BITS || defined(__ILP32__)
+   const int kRegisterPadding = 16;
+ #endif
+ 
+diff -urNp -x '*.orig' qtwebengine.org/src/3rdparty/chromium/build/build_config.h qtwebengine/src/3rdparty/chromium/build/build_config.h
+--- qtwebengine.org/src/3rdparty/chromium/build/build_config.h	2021-08-13 12:36:55.000000000 +0200
++++ qtwebengine/src/3rdparty/chromium/build/build_config.h	2021-08-14 11:13:23.606971650 +0200
+@@ -129,7 +129,11 @@
+ #if defined(_M_X64) || defined(__x86_64__)
+ #define ARCH_CPU_X86_FAMILY 1
+ #define ARCH_CPU_X86_64 1
++#ifdef __ILP32__
++#define ARCH_CPU_32_BITS 1
++#else
+ #define ARCH_CPU_64_BITS 1
++#endif
+ #define ARCH_CPU_LITTLE_ENDIAN 1
+ #elif defined(_M_IX86) || defined(__i386__)
+ #define ARCH_CPU_X86_FAMILY 1
+diff -urNp -x '*.orig' qtwebengine.org/src/3rdparty/chromium/build/config/compiler/BUILD.gn qtwebengine/src/3rdparty/chromium/build/config/compiler/BUILD.gn
+--- qtwebengine.org/src/3rdparty/chromium/build/config/compiler/BUILD.gn	2021-08-13 12:36:55.000000000 +0200
++++ qtwebengine/src/3rdparty/chromium/build/config/compiler/BUILD.gn	2021-08-14 11:13:23.606971650 +0200
+@@ -765,14 +765,7 @@ config("compiler_cpu_abi") {
+   if ((is_posix && !is_apple) || is_fuchsia) {
      # CPU architecture. We may or may not be doing a cross compile now, so for
      # simplicity we always explicitly set the architecture.
 -    if (current_cpu == "x64") {
@@ -17,11 +77,11 @@ diff -ur qtwebengine-everywhere-src-5.11.1/src/3rdparty/chromium/build/config/co
        if (!is_nacl) {
          cflags += [
            "-msse2",
-diff -ur qtwebengine-everywhere-src-5.11.1/src/3rdparty/chromium/third_party/boringssl/src/crypto/fipsmodule/rand/urandom.c qtwebengine-everywhere-src-5.11.1-x32/src/3rdparty/chromium/third_party/boringssl/src/crypto/fipsmodule/rand/urandom.c
---- qtwebengine-everywhere-src-5.11.1/src/3rdparty/chromium/third_party/boringssl/src/crypto/fipsmodule/rand/urandom.c	2018-06-15 09:47:20.000000000 +0200
-+++ qtwebengine-everywhere-src-5.11.1-x32/src/3rdparty/chromium/third_party/boringssl/src/crypto/fipsmodule/rand/urandom.c	2018-08-13 01:55:47.227682313 +0200
-@@ -47,7 +47,11 @@
- #if defined(OPENSSL_LINUX)
+diff -urNp -x '*.orig' qtwebengine.org/src/3rdparty/chromium/third_party/boringssl/src/crypto/fipsmodule/rand/getrandom_fillin.h qtwebengine/src/3rdparty/chromium/third_party/boringssl/src/crypto/fipsmodule/rand/getrandom_fillin.h
+--- qtwebengine.org/src/3rdparty/chromium/third_party/boringssl/src/crypto/fipsmodule/rand/getrandom_fillin.h	2021-08-13 12:36:59.000000000 +0200
++++ qtwebengine/src/3rdparty/chromium/third_party/boringssl/src/crypto/fipsmodule/rand/getrandom_fillin.h	2021-08-14 11:13:23.606971650 +0200
+@@ -23,7 +23,11 @@
+ #include <sys/syscall.h>
  
  #if defined(OPENSSL_X86_64)
 +#if defined(__ILP32__)
@@ -32,10 +92,10 @@ diff -ur qtwebengine-everywhere-src-5.11.1/src/3rdparty/chromium/third_party/bor
  #elif defined(OPENSSL_X86)
  #define EXPECTED_NR_getrandom 355
  #elif defined(OPENSSL_AARCH64)
-diff -ur qtwebengine-everywhere-src-5.11.1/src/3rdparty/chromium/v8/src/objects/bigint.cc qtwebengine-everywhere-src-5.11.1-x32/src/3rdparty/chromium/v8/src/objects/bigint.cc
---- qtwebengine-everywhere-src-5.11.1/src/3rdparty/chromium/v8/src/objects/bigint.cc	2018-06-15 09:47:20.000000000 +0200
-+++ qtwebengine-everywhere-src-5.11.1-x32/src/3rdparty/chromium/v8/src/objects/bigint.cc	2018-08-13 02:15:32.443103386 +0200
-@@ -2162,7 +2162,7 @@
+diff -urNp -x '*.orig' qtwebengine.org/src/3rdparty/chromium/v8/src/objects/bigint.cc qtwebengine/src/3rdparty/chromium/v8/src/objects/bigint.cc
+--- qtwebengine.org/src/3rdparty/chromium/v8/src/objects/bigint.cc	2021-08-13 12:37:04.000000000 +0200
++++ qtwebengine/src/3rdparty/chromium/v8/src/objects/bigint.cc	2021-08-14 11:13:23.606971650 +0200
+@@ -2641,7 +2641,7 @@ inline BigInt::digit_t MutableBigInt::di
  BigInt::digit_t MutableBigInt::digit_div(digit_t high, digit_t low,
                                           digit_t divisor, digit_t* remainder) {
    DCHECK(high < divisor);
@@ -44,60 +104,3 @@ diff -ur qtwebengine-everywhere-src-5.11.1/src/3rdparty/chromium/v8/src/objects/
    digit_t quotient;
    digit_t rem;
    __asm__("divq  %[divisor]"
---- qtwebengine-everywhere-src-5.11.1.clean/src/3rdparty/chromium/build/build_config.h~	2018-06-15 09:47:20.000000000 +0200
-+++ qtwebengine-everywhere-src-5.11.1.clean/src/3rdparty/chromium/build/build_config.h	2018-08-14 09:23:40.756276384 +0200
-@@ -106,7 +106,11 @@
- #if defined(_M_X64) || defined(__x86_64__)
- #define ARCH_CPU_X86_FAMILY 1
- #define ARCH_CPU_X86_64 1
-+#ifdef __ILP32__
-+#define ARCH_CPU_32_BITS 1
-+#else
- #define ARCH_CPU_64_BITS 1
-+#endif
- #define ARCH_CPU_LITTLE_ENDIAN 1
- #elif defined(_M_IX86) || defined(__i386__)
- #define ARCH_CPU_X86_FAMILY 1
---- qtwebengine-everywhere-src-5.11.1/src/3rdparty/chromium/base/allocator/partition_allocator/address_space_randomization.cc~	2018-06-15 09:47:20.000000000 +0200
-+++ qtwebengine-everywhere-src-5.11.1/src/3rdparty/chromium/base/allocator/partition_allocator/address_space_randomization.cc	2018-08-14 09:27:44.678865071 +0200
-@@ -77,7 +77,7 @@
- void* GetRandomPageBase() {
-   uintptr_t random = static_cast<uintptr_t>(ranval(s_ranctx.Pointer()));
- 
--#if defined(ARCH_CPU_64_BITS)
-+#if defined(ARCH_CPU_64_BITS) && !defined(__ILP32__)
-   random <<= 32ULL;
-   random |= static_cast<uintptr_t>(ranval(s_ranctx.Pointer()));
- 
---- qtwebengine-everywhere-src-5.11.1/src/3rdparty/chromium/base/debug/stack_trace_posix.cc~	2018-06-15 09:47:20.000000000 +0200
-+++ qtwebengine-everywhere-src-5.11.1/src/3rdparty/chromium/base/debug/stack_trace_posix.cc	2018-08-14 09:46:02.035829506 +0200
-@@ -340,7 +340,7 @@
-     const char* label;
-     greg_t value;
-   } registers[] = {
--#if ARCH_CPU_32_BITS
-+#if ARCH_CPU_32_BITS && !defined(__ILP32__)
-     { "  gs: ", context->uc_mcontext.gregs[REG_GS] },
-     { "  fs: ", context->uc_mcontext.gregs[REG_FS] },
-     { "  es: ", context->uc_mcontext.gregs[REG_ES] },
-@@ -360,7 +360,7 @@
-     { " efl: ", context->uc_mcontext.gregs[REG_EFL] },
-     { " usp: ", context->uc_mcontext.gregs[REG_UESP] },
-     { "  ss: ", context->uc_mcontext.gregs[REG_SS] },
--#elif ARCH_CPU_64_BITS
-+#elif ARCH_CPU_64_BITS || defined(__ILP32__)
-     { "  r8: ", context->uc_mcontext.gregs[REG_R8] },
-     { "  r9: ", context->uc_mcontext.gregs[REG_R9] },
-     { " r10: ", context->uc_mcontext.gregs[REG_R10] },
-@@ -387,9 +387,9 @@
- #endif  // ARCH_CPU_32_BITS
-   };
- 
--#if ARCH_CPU_32_BITS
-+#if ARCH_CPU_32_BITS && !defined(__ILP32__)
-   const int kRegisterPadding = 8;
--#elif ARCH_CPU_64_BITS
-+#elif ARCH_CPU_64_BITS || defined(__ILP32__)
-   const int kRegisterPadding = 16;
- #endif
- 

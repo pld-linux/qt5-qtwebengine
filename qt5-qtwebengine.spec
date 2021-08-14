@@ -84,6 +84,7 @@ BuildRequires:	qt5-assistant >= 5.15
 %endif
 BuildRequires:	qt5-build >= 5.15
 BuildRequires:	qt5-qmake >= 5.15
+BuildRequires:	qt5-qtdoc
 BuildRequires:	qt5-qttools
 BuildRequires:	re2-devel
 BuildRequires:	rpmbuild(macros) >= 1.752
