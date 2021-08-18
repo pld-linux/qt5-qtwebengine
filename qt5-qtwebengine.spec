@@ -14,7 +14,7 @@ Summary:	The Qt5 WebEngine library
 Summary(pl.UTF-8):	Biblioteka Qt5 WebEngine
 Name:		qt5-%{orgname}
 Version:	5.15.5
-Release:	1
+Release:	2
 License:	LGPL v3 or GPL v2 or GPL v3 or commercial
 Group:		X11/Libraries
 Source0:	qtwebengine-%{version}.tar.xz
@@ -23,6 +23,7 @@ Patch0:		x32.patch
 Patch1:		%{name}-gn-dynamic.patch
 Patch2:		icu.patch
 Patch3:		glibc-2.33.patch
+Patch4:		glibc2.34.patch
 URL:		https://www.qt.io/
 BuildRequires:	Mesa-khrplatform-devel
 BuildRequires:	Qt5Core-devel >= %{qtbase_ver}
@@ -275,6 +276,9 @@ Przykłady do biblioteki Qt5 WebEngine.
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
+cd src/3rdparty/chromium
+%patch4 -p1
+cd ../../..
 
 %{qt5bindir}/syncqt.pl -version %{version}
 
