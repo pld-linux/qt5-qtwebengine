@@ -25,7 +25,6 @@ Patch2:		icu.patch
 Patch3:		glibc-2.33.patch
 Patch4:		glibc2.34.patch
 URL:		https://www.qt.io/
-BuildRequires:	Mesa-khrplatform-devel
 BuildRequires:	Qt5Core-devel >= %{qtbase_ver}
 BuildRequires:	Qt5Designer-devel >= %{qttools_ver}
 BuildRequires:	Qt5Gui-devel >= %{qtbase_ver}
@@ -54,6 +53,7 @@ BuildRequires:	gperf
 BuildRequires:	harfbuzz-devel >= 2.2.0
 # webengine-system-jsoncpp disabled in src/core/config/linux.pri
 #BuildRequires:	jsoncpp-devel
+BuildRequires:	khrplatform-devel
 BuildRequires:	lcms2-devel
 BuildRequires:	libdrm-devel
 BuildRequires:	libevent-devel
