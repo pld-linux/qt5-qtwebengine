@@ -3,6 +3,8 @@
 %bcond_without	doc		# documentation
 %bcond_without	system_libvpx	# Build with system libvpx
 
+%define		base_version	5.15
+
 %define		orgname		qtwebengine
 %define		qtbase_ver		5.15
 %define		qtdeclarative_ver	5.15
@@ -13,8 +15,8 @@
 Summary:	The Qt5 WebEngine library
 Summary(pl.UTF-8):	Biblioteka Qt5 WebEngine
 Name:		qt5-%{orgname}
-Version:	5.15.6
-Release:	1
+Version:	%{base_version}.6
+Release:	2
 License:	LGPL v3 or GPL v2 or GPL v3 or commercial
 Group:		X11/Libraries
 Source0:	qtwebengine-%{version}.tar.xz
@@ -343,6 +345,10 @@ ifecho_tree examples %{_examplesdir}/qt5/pdf
 ifecho_tree examples %{_examplesdir}/qt5/pdfwidgets
 ifecho_tree examples %{_examplesdir}/qt5/webengine
 ifecho_tree examples %{_examplesdir}/qt5/webenginewidgets
+
+# fixup artificial Qt version dependency
+sed -i -e 's/%{version} ${_Qt5WebEngine[^_]*_FIND_VERSION_EXACT}/%{base_version}/' \
+	$RPM_BUILD_ROOT%{_libdir}/cmake/Qt5WebEngine*/Qt5WebEngine*Config.cmake
 
 %clean
 rm -rf $RPM_BUILD_ROOT
