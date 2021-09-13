@@ -52,14 +52,15 @@ BuildRequires:	glib2-devel >= 1:2.32.0
 BuildRequires:	glibc-misc >= 6:2.17
 BuildRequires:	glibc-devel >= 6:2.17
 BuildRequires:	gperf
-BuildRequires:	harfbuzz-devel >= 2.2.0
+BuildRequires:	harfbuzz-devel >= 2.4.0
+BuildRequires:	harfbuzz-subset-devel >= 2.4.0
 # webengine-system-jsoncpp disabled in src/core/config/linux.pri
 #BuildRequires:	jsoncpp-devel
 BuildRequires:	khrplatform-devel
 BuildRequires:	lcms2-devel
 BuildRequires:	libdrm-devel
 BuildRequires:	libevent-devel
-BuildRequires:	libicu-devel >= 64
+BuildRequires:	libicu-devel >= 65
 BuildRequires:	libjpeg-devel
 BuildRequires:	libpng-devel >= 2:1.6.0
 BuildRequires:	libstdc++-devel >= 6:5
@@ -82,6 +83,7 @@ BuildRequires:	pkgconfig
 #BuildRequires:	protobuf-devel
 BuildRequires:	pulseaudio-devel >= 0.9.10
 BuildRequires:	python >= 1:2.7.5
+BuildRequires:	python-modules >= 1:2.7.5
 %if %{with doc}
 BuildRequires:	qt5-assistant >= 5.15
 %endif
@@ -105,6 +107,8 @@ BuildRequires:	xorg-lib-libXrender-devel
 BuildRequires:	xorg-lib-libXrandr-devel
 BuildRequires:	xorg-lib-libXtst-devel
 BuildRequires:	xorg-lib-libxkbcommon-devel
+BuildRequires:	xorg-lib-libxkbfile-devel
+BuildRequires:	xorg-proto-glproto-devel
 BuildRequires:	xz
 BuildRequires:	zlib-devel
 BuildConflicts:	Qt5WebEngine-devel
@@ -143,8 +147,9 @@ Group:		Libraries
 %requires_ge_to	Qt5WebChannel Qt5WebChannel-devel
 Requires:	alsa-lib >= 1.0.10
 Requires:	freetype >= 1:2.4.2
-Requires:	harfbuzz >= 2.2.0
-Requires:	libicu >= 64
+Requires:	harfbuzz >= 2.4.0
+Requires:	harfbuzz-subset >= 2.4.0
+Requires:	libicu >= 65
 Requires:	libpng >= 2:1.6.0
 %{?with_system_libvpx:Requires:	libvpx >= 1.8.0}
 Requires:	nss >= 3.26
