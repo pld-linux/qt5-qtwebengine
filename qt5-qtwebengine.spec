@@ -26,6 +26,7 @@ Patch1:		%{name}-gn-dynamic.patch
 Patch2:		icu.patch
 Patch3:		glibc-2.33.patch
 Patch4:		glibc2.34.patch
+Patch5:		harfbuzz3.patch
 URL:		https://www.qt.io/
 BuildRequires:	Qt5Core-devel >= %{qtbase_ver}
 BuildRequires:	Qt5Designer-devel >= %{qttools_ver}
@@ -52,8 +53,8 @@ BuildRequires:	glib2-devel >= 1:2.32.0
 BuildRequires:	glibc-misc >= 6:2.17
 BuildRequires:	glibc-devel >= 6:2.17
 BuildRequires:	gperf
-BuildRequires:	harfbuzz-devel >= 2.4.0
-BuildRequires:	harfbuzz-subset-devel >= 2.4.0
+BuildRequires:	harfbuzz-devel >= 3.0.0
+BuildRequires:	harfbuzz-subset-devel >= 3.0.0
 # webengine-system-jsoncpp disabled in src/core/config/linux.pri
 #BuildRequires:	jsoncpp-devel
 BuildRequires:	khrplatform-devel
@@ -147,8 +148,8 @@ Group:		Libraries
 %requires_ge_to	Qt5WebChannel Qt5WebChannel-devel
 Requires:	alsa-lib >= 1.0.10
 Requires:	freetype >= 1:2.4.2
-Requires:	harfbuzz >= 2.4.0
-Requires:	harfbuzz-subset >= 2.4.0
+Requires:	harfbuzz >= 3.0.0
+Requires:	harfbuzz-subset >= 3.0.0
 Requires:	libicu >= 65
 Requires:	libpng >= 2:1.6.0
 %{?with_system_libvpx:Requires:	libvpx >= 1.8.0}
@@ -286,6 +287,7 @@ Przykłady do biblioteki Qt5 WebEngine.
 cd src/3rdparty/chromium
 %patch4 -p1
 cd ../../..
+%patch5 -p1
 
 %{qt5bindir}/syncqt.pl -version %{version}
 
