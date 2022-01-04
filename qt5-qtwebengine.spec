@@ -90,6 +90,7 @@ BuildRequires:	qt5-qmake >= 5.15
 BuildRequires:	qt5-qtdoc
 BuildRequires:	qt5-qttools
 BuildRequires:	re2-devel
+BuildRequires:	rpm-build >= 4.6
 BuildRequires:	rpmbuild(macros) >= 1.752
 BuildRequires:	snappy-devel
 BuildRequires:	tar >= 1:1.22
