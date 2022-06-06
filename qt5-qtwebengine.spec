@@ -24,6 +24,7 @@ Source0:	qtwebengine-%{version}.tar.xz
 Patch0:		x32.patch
 Patch1:		%{name}-gn-dynamic.patch
 Patch2:		icu.patch
+Patch3:		gcc12.patch
 URL:		https://www.qt.io/
 BuildRequires:	Qt5Core-devel >= %{qtbase_ver}
 BuildRequires:	Qt5Designer-devel >= %{qttools_ver}
@@ -281,6 +282,9 @@ Przykłady do biblioteki Qt5 WebEngine.
 %endif
 %patch1 -p1
 %patch2 -p1
+cd src/3rdparty
+%patch3 -p1
+cd ../..
 
 %{qt5bindir}/syncqt.pl -version %{version}
 
