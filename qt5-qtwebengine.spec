@@ -92,7 +92,7 @@ BuildRequires:	qt5-qtdoc
 BuildRequires:	qt5-qttools
 BuildRequires:	re2-devel
 BuildRequires:	rpm-build >= 4.6
-BuildRequires:	rpmbuild(macros) >= 1.752
+BuildRequires:	rpmbuild(macros) >= 2.016
 BuildRequires:	snappy-devel
 BuildRequires:	tar >= 1:1.22
 BuildRequires:	xorg-lib-libX11-devel
@@ -292,7 +292,7 @@ cd ../..
 %ifarch x32
 export V8_TARGET_ARCH="x32"
 %endif
-qmake-qt5 CONFIG+=use_gold_linker -- \
+%{qmake_qt5} CONFIG+=use_gold_linker -- \
 	-webengine-ffmpeg \
 	-webengine-icu \
 	-webengine-opus \
