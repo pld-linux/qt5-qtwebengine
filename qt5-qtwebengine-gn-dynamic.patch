@@ -9,4 +9,4 @@ At least link it dynamically.
 +                          --no-static-libstdc++ \
                            --cc \"$$which($$QMAKE_CC)\" --cxx \"$$which($$QMAKE_CXX)\" \
                            --ld \"$$which($$QMAKE_LINK)\"
- 
+             !isEmpty(QMAKE_AR): gn_gen_args += --ar \"$$which($$first(QMAKE_AR))\"
