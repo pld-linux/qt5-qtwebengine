@@ -136,7 +136,7 @@ Ten pakiet zawiera bibliotekę Qt5 WebEngine.
 Summary:	The Qt5 WebEngine library
 Summary(pl.UTF-8):	Biblioteka Qt5 WebEngine
 Group:		Libraries
-%requires_ge_to	Qt5Core Qt5Core-devel
+%requires_eq_to	Qt5Core Qt5Core-devel
 %requires_ge_to	Qt5Gui Qt5Gui-devel
 %requires_ge_to	Qt5Network Qt5Network-devel
 %requires_ge_to	Qt5Positioning Qt5Positioning-devel
@@ -187,7 +187,7 @@ Biblioteka Qt5 WebEngine - pliki programistyczne.
 Summary:	The Qt5 Pdf library
 Summary(pl.UTF-8):	Biblioteka Qt5 Pdf
 Group:		Libraries
-%requires_ge_to	Qt5Core Qt5Core-devel
+%requires_eq_to	Qt5Core Qt5Core-devel
 %requires_ge_to	Qt5Gui Qt5Gui-devel
 %requires_ge_to	Qt5Network Qt5Network-devel
 %requires_ge_to	Qt5Qml Qt5Qml-devel
