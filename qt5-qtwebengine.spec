@@ -23,6 +23,7 @@ Source0:	qtwebengine-%{version}.tar.xz
 # Source0-md5:	fa635b1707607b3eafdc7e099b8cc22c
 Patch0:		x32.patch
 Patch1:		%{name}-gn-dynamic.patch
+Patch2:		0001-avcodec-x86-mathops-clip-constants-used-with-shift-i.patch
 URL:		https://www.qt.io/
 BuildRequires:	Qt5Core-devel >= %{qtbase_ver}
 BuildRequires:	Qt5Designer-devel >= %{qttools_ver}
@@ -279,6 +280,7 @@ Przykłady do biblioteki Qt5 WebEngine.
 %patch0 -p1
 %endif
 %patch1 -p1
+%patch2 -p1
 
 %{qt5bindir}/syncqt.pl -version %{version}
 
