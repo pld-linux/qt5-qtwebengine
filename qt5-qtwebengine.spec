@@ -24,6 +24,10 @@ Source0:	qtwebengine-%{version}.tar.xz
 Patch0:		x32.patch
 Patch1:		%{name}-gn-dynamic.patch
 Patch2:		0001-avcodec-x86-mathops-clip-constants-used-with-shift-i.patch
+Patch3:		qt5-webengine-ffmpeg5.patch
+Patch4:		qt5-webengine-pipewire-0.3.patch
+Patch5:		chromium-107-proprietary-codecs.patch
+Patch6:		chromium-112-ffmpeg-first_dts.patch
 URL:		https://www.qt.io/
 BuildRequires:	Qt5Core-devel >= %{qtbase_ver}
 BuildRequires:	Qt5Designer-devel >= %{qttools_ver}
@@ -281,6 +285,10 @@ Przykłady do biblioteki Qt5 WebEngine.
 %endif
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1 -d src/3rdparty
+%patch4 -p1 -d src/3rdparty
+%patch5 -p1 -d src/3rdparty/chromium
+%patch6 -p1 -d src/3rdparty/chromium
 
 %{qt5bindir}/syncqt.pl -version %{version}
 
