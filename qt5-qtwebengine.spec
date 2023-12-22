@@ -122,8 +122,6 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %define		qt5bindir	%(qtpaths-qt5 --binaries-dir)
 
-%define		ffmpeg_ver	%(rpm -q --qf=%%{V} ffmpeg-devel)
-
 %description
 Qt is a cross-platform application and UI framework. Using Qt, you can
 write web-enabled applications once and deploy them across desktop,
@@ -287,12 +285,10 @@ Przykłady do biblioteki Qt5 WebEngine.
 %endif
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1 -d src/3rdparty
 %patch4 -p1 -d src/3rdparty
 %patch5 -p1 -d src/3rdparty/chromium
-%if %{_ver_ge "%ffmpeg_ver" "5"}
-%patch3 -p1 -d src/3rdparty
 %patch6 -p1 -d src/3rdparty/chromium
-%endif
 
 %{qt5bindir}/syncqt.pl -version %{version}
 
