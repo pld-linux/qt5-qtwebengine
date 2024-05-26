@@ -29,6 +29,7 @@ Patch3:		qt5-webengine-ffmpeg5.patch
 Patch4:		qt5-webengine-pipewire-0.3.patch
 Patch5:		chromium-107-proprietary-codecs.patch
 Patch6:		chromium-112-ffmpeg-first_dts.patch
+Patch7:		ninja-1.12.patch
 URL:		https://www.qt.io/
 BuildRequires:	Qt5Core-devel >= %{qtbase_ver}
 BuildRequires:	Qt5Designer-devel >= %{qttools_ver}
@@ -295,6 +296,7 @@ Przykłady do biblioteki Qt5 WebEngine.
 %patch3 -p1 -d src/3rdparty
 %patch6 -p1 -d src/3rdparty/chromium
 %endif
+%patch7 -p1 -d src/3rdparty
 
 %{qt5bindir}/syncqt.pl -version %{version}
 
