@@ -16,20 +16,20 @@
 Summary:	The Qt5 WebEngine library
 Summary(pl.UTF-8):	Biblioteka Qt5 WebEngine
 Name:		qt5-%{orgname}
-Version:	%{base_version}.15
-Release:	5
+Version:	%{base_version}.17
+Release:	1
 License:	LGPL v3 or GPL v2 or GPL v3 or commercial
 Group:		X11/Libraries
 Source0:	qtwebengine-%{version}.tar.xz
-# Source0-md5:	fa635b1707607b3eafdc7e099b8cc22c
+# Source0-md5:	7c3144b76008377d8f7d74369bd9bc4f
 Patch0:		x32.patch
 Patch1:		%{name}-gn-dynamic.patch
-Patch2:		0001-avcodec-x86-mathops-clip-constants-used-with-shift-i.patch
 Patch3:		qt5-webengine-ffmpeg5.patch
 Patch4:		qt5-webengine-pipewire-0.3.patch
 Patch5:		chromium-107-proprietary-codecs.patch
 Patch6:		chromium-112-ffmpeg-first_dts.patch
 Patch7:		ninja-1.12.patch
+Patch8:		system-ffmpeg-check.patch
 URL:		https://www.qt.io/
 BuildRequires:	Qt5Core-devel >= %{qtbase_ver}
 BuildRequires:	Qt5Designer-devel >= %{qttools_ver}
@@ -289,12 +289,12 @@ Przykłady do biblioteki Qt5 WebEngine.
 %patch0 -p1
 %endif
 %patch1 -p1
-%patch2 -p1
 %patch4 -p1 -d src/3rdparty
 %patch5 -p1 -d src/3rdparty/chromium
 %if %{_ver_ge %ffmpeg_ver 5}
 %patch3 -p1 -d src/3rdparty
 %patch6 -p1 -d src/3rdparty/chromium
+%patch8 -p1 -R
 %endif
 %patch7 -p1 -d src/3rdparty
 
