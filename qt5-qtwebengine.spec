@@ -2,6 +2,7 @@
 # Conditional build:
 %bcond_without	doc		# documentation
 %bcond_without	system_libvpx	# Build with system libvpx
+%bcond_with	system_re2	# Build with system re2
 
 %define		base_version	5.15
 
@@ -93,7 +94,7 @@ BuildRequires:	qt5-build >= 5.15
 BuildRequires:	qt5-qmake >= 5.15
 BuildRequires:	qt5-qtdoc
 BuildRequires:	qt5-qttools
-BuildRequires:	re2-devel
+%{?with_system_re2:BuildRequires:	re2-devel}
 BuildRequires:	rpm-build >= 4.6
 BuildRequires:	rpmbuild(macros) >= 2.016
 BuildRequires:	snappy-devel
@@ -115,6 +116,7 @@ BuildRequires:	xorg-proto-glproto-devel
 BuildRequires:	xz
 BuildRequires:	zlib-devel
 BuildConflicts:	Qt5WebEngine-devel
+%{!?with_system_re2:BuildConflicts:	re2-devel}
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %define		specflags	-fno-strict-aliasing
