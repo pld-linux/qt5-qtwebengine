@@ -1,8 +1,8 @@
 #
 # Conditional build:
 %bcond_without	doc		# documentation
-%bcond_without	system_libvpx	# Build with system libvpx
-%bcond_with	system_re2	# Build with system re2
+%bcond_without	system_libvpx	# system libvpx library
+%bcond_with	system_re2	# system re2 library
 
 %define		base_version	5.15
 
@@ -98,6 +98,7 @@ BuildRequires:	qt5-qttools
 %{?with_system_re2:BuildRequires:	re2-devel}
 BuildRequires:	rpm-build >= 4.6
 BuildRequires:	rpmbuild(macros) >= 2.016
+BuildRequires:	sed >= 4.0
 BuildRequires:	snappy-devel
 BuildRequires:	tar >= 1:1.22
 BuildRequires:	xorg-lib-libX11-devel
@@ -117,7 +118,6 @@ BuildRequires:	xorg-proto-glproto-devel
 BuildRequires:	xz
 BuildRequires:	zlib-devel
 BuildConflicts:	Qt5WebEngine-devel
-%{!?with_system_re2:BuildConflicts:	re2-devel}
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %define		specflags	-fno-strict-aliasing
@@ -297,6 +297,11 @@ Przykłady do biblioteki Qt5 WebEngine.
 %patch8 -p1 -R
 %endif
 %patch7 -p1 -d src/3rdparty
+
+%if %{without system_re2}
+# avoid finding system re2
+%{__sed} -i -e '/pkgConfig.*re2/ s/re2/re2-disabled/' src/buildtools/configure.json
+%endif
 
 %{qt5bindir}/syncqt.pl -version %{version}
 
