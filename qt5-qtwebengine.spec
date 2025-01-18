@@ -30,6 +30,7 @@ Patch5:		chromium-107-proprietary-codecs.patch
 Patch6:		chromium-112-ffmpeg-first_dts.patch
 Patch7:		ninja-1.12.patch
 Patch8:		system-ffmpeg-check.patch
+Patch9:		icu75.patch
 URL:		https://www.qt.io/
 BuildRequires:	Qt5Core-devel >= %{qtbase_ver}
 BuildRequires:	Qt5Designer-devel >= %{qttools_ver}
@@ -67,7 +68,7 @@ BuildRequires:	libevent-devel
 BuildRequires:	libicu-devel >= 65
 BuildRequires:	libjpeg-devel
 BuildRequires:	libpng-devel >= 2:1.6.0
-BuildRequires:	libstdc++-devel >= 6:5
+BuildRequires:	libstdc++-devel >= 6:8
 %{?with_system_libvpx:BuildRequires:	libvpx-devel >= 1.8.0}
 BuildRequires:	libwebp-devel
 BuildRequires:	libxcb-devel
@@ -286,17 +287,18 @@ Przykłady do biblioteki Qt5 WebEngine.
 %prep
 %setup -q -n qtwebengine
 %ifarch x32
-%patch0 -p1
+%patch -P0 -p1
 %endif
-%patch1 -p1
-%patch4 -p1 -d src/3rdparty
-%patch5 -p1 -d src/3rdparty/chromium
+%patch -P1 -p1
+%patch -P4 -p1 -d src/3rdparty
+%patch -P5 -p1 -d src/3rdparty/chromium
 %if %{_ver_ge %ffmpeg_ver 5}
-%patch3 -p1 -d src/3rdparty
-%patch6 -p1 -d src/3rdparty/chromium
-%patch8 -p1 -R
+%patch -P3 -p1 -d src/3rdparty
+%patch -P6 -p1 -d src/3rdparty/chromium
+%patch -P8 -p1 -R
 %endif
-%patch7 -p1 -d src/3rdparty
+%patch -P7 -p1 -d src/3rdparty
+%patch -P9 -p1 -d src/3rdparty
 
 %if %{without system_re2}
 # avoid finding system re2
