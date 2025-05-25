@@ -17,7 +17,7 @@ Summary:	The Qt5 WebEngine library
 Summary(pl.UTF-8):	Biblioteka Qt5 WebEngine
 Name:		qt5-%{orgname}
 Version:	%{base_version}.18
-Release:	1
+Release:	2
 License:	LGPL v3 or GPL v2 or GPL v3 or commercial
 Group:		X11/Libraries
 Source0:	qtwebengine-%{version}.tar.xz
