@@ -311,7 +311,7 @@ Przykłady do biblioteki Qt5 WebEngine.
 %ifarch x32
 export V8_TARGET_ARCH="x32"
 %endif
-%{qmake_qt5} CONFIG+=use_gold_linker -- \
+%{qmake_qt5} CONFIG+=use_gold_linker QMAKE_PYTHON2="%{__python}" -- \
 	-webengine-ffmpeg \
 	-webengine-icu \
 	-webengine-opus \
