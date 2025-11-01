@@ -20,8 +20,8 @@ Version:	%{base_version}.18
 Release:	4
 License:	LGPL v3 or GPL v2 or GPL v3 or commercial
 Group:		X11/Libraries
-Source0:	qtwebengine-%{version}.tar.xz
-# Source0-md5:	8e5d556579c58cca4f100f2be93a44ff
+Source0:	https://download.qt.io/archive/qt/5.15/%{version}/submodules/%{orgname}-everywhere-opensource-src-%{version}.tar.xz
+# Source0-md5:	8c070a1a226db18fc806cdf9f965ae78
 Patch0:		x32.patch
 Patch1:		%{name}-gn-dynamic.patch
 Patch3:		qt5-webengine-ffmpeg5.patch
@@ -285,7 +285,7 @@ Qt5 WebEngine examples.
 Przykłady do biblioteki Qt5 WebEngine.
 
 %prep
-%setup -q -n qtwebengine
+%setup -q -n %{orgname}-everywhere-src-%{version}
 %ifarch x32
 %patch -P0 -p1
 %endif
