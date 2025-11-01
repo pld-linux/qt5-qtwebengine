@@ -1,0 +1,200 @@
+--- qtwebengine-everywhere-src-5.15.18/src/3rdparty/chromium/third_party/perfetto/include/perfetto/ext/tracing/core/slice.h.orig	2024-10-17 10:18:07.000000000 +0200
++++ qtwebengine-everywhere-src-5.15.18/src/3rdparty/chromium/third_party/perfetto/include/perfetto/ext/tracing/core/slice.h	2025-11-01 00:28:09.271235281 +0100
+@@ -17,6 +17,7 @@
+ #ifndef INCLUDE_PERFETTO_EXT_TRACING_CORE_SLICE_H_
+ #define INCLUDE_PERFETTO_EXT_TRACING_CORE_SLICE_H_
+ 
++#include <stdint.h>
+ #include <stddef.h>
+ #include <string.h>
+ 
+--- qtwebengine-everywhere-src-5.15.18/src/3rdparty/chromium/third_party/perfetto/include/perfetto/ext/tracing/core/trace_packet.h.orig	2024-10-17 10:18:07.000000000 +0200
++++ qtwebengine-everywhere-src-5.15.18/src/3rdparty/chromium/third_party/perfetto/include/perfetto/ext/tracing/core/trace_packet.h	2025-11-01 00:29:30.488804899 +0100
+@@ -17,6 +17,7 @@
+ #ifndef INCLUDE_PERFETTO_EXT_TRACING_CORE_TRACE_PACKET_H_
+ #define INCLUDE_PERFETTO_EXT_TRACING_CORE_TRACE_PACKET_H_
+ 
++#include <stdint.h>
+ #include <stddef.h>
+ #include <memory>
+ #include <tuple>
+--- qtwebengine-everywhere-src-5.15.18/src/3rdparty/chromium/third_party/perfetto/src/trace_processor/importers/gzip/gzip_utils.h.orig	2024-10-17 10:18:07.000000000 +0200
++++ qtwebengine-everywhere-src-5.15.18/src/3rdparty/chromium/third_party/perfetto/src/trace_processor/importers/gzip/gzip_utils.h	2025-11-01 00:34:41.246196747 +0100
+@@ -17,6 +17,7 @@
+ #ifndef SRC_TRACE_PROCESSOR_IMPORTERS_GZIP_GZIP_UTILS_H_
+ #define SRC_TRACE_PROCESSOR_IMPORTERS_GZIP_GZIP_UTILS_H_
+ 
++#include <cstdint>
+ #include <memory>
+ 
+ struct z_stream_s;
+--- qtwebengine-everywhere-src-5.15.18/src/3rdparty/chromium/third_party/perfetto/include/perfetto/tracing/tracing_backend.h.orig	2024-10-17 10:18:07.000000000 +0200
++++ qtwebengine-everywhere-src-5.15.18/src/3rdparty/chromium/third_party/perfetto/include/perfetto/tracing/tracing_backend.h	2025-11-01 00:36:46.025813722 +0100
+@@ -17,6 +17,7 @@
+ #ifndef INCLUDE_PERFETTO_TRACING_TRACING_BACKEND_H_
+ #define INCLUDE_PERFETTO_TRACING_TRACING_BACKEND_H_
+ 
++#include <cstdint>
+ #include <memory>
+ #include <string>
+ 
+--- qtwebengine-everywhere-src-5.15.18/src/3rdparty/chromium/base/task/thread_pool.h.orig	2024-10-17 10:18:07.000000000 +0200
++++ qtwebengine-everywhere-src-5.15.18/src/3rdparty/chromium/base/task/thread_pool.h	2025-11-01 00:39:35.050784346 +0100
+@@ -5,6 +5,7 @@
+ #ifndef BASE_TASK_THREAD_POOL_H_
+ #define BASE_TASK_THREAD_POOL_H_
+ 
++#include <cstdint>
+ #include <memory>
+ #include <utility>
+ 
+--- qtwebengine-everywhere-src-5.15.18/src/3rdparty/chromium/third_party/webrtc/api/task_queue/task_queue_base.h.orig	2024-10-17 10:18:07.000000000 +0200
++++ qtwebengine-everywhere-src-5.15.18/src/3rdparty/chromium/third_party/webrtc/api/task_queue/task_queue_base.h	2025-11-01 00:43:34.772335677 +0100
+@@ -10,6 +10,7 @@
+ #ifndef API_TASK_QUEUE_TASK_QUEUE_BASE_H_
+ #define API_TASK_QUEUE_TASK_QUEUE_BASE_H_
+ 
++#include <cstdint>
+ #include <memory>
+ 
+ #include "api/task_queue/queued_task.h"
+--- qtwebengine-everywhere-src-5.15.18/src/3rdparty/chromium/net/tools/huffman_trie/trie_entry.h.orig	2024-10-17 10:18:07.000000000 +0200
++++ qtwebengine-everywhere-src-5.15.18/src/3rdparty/chromium/net/tools/huffman_trie/trie_entry.h	2025-11-01 01:00:05.599741155 +0100
+@@ -5,6 +5,7 @@
+ #ifndef NET_TOOLS_HUFFMAN_TRIE_TRIE_ENTRY_H_
+ #define NET_TOOLS_HUFFMAN_TRIE_TRIE_ENTRY_H_
+ 
++#include <cstdint>
+ #include <memory>
+ #include <string>
+ #include <vector>
+--- qtwebengine-everywhere-src-5.15.18/src/3rdparty/chromium/third_party/webrtc/api/fec_controller.h.orig	2024-10-17 10:18:07.000000000 +0200
++++ qtwebengine-everywhere-src-5.15.18/src/3rdparty/chromium/third_party/webrtc/api/fec_controller.h	2025-11-01 01:28:52.168025609 +0100
+@@ -11,6 +11,7 @@
+ #ifndef API_FEC_CONTROLLER_H_
+ #define API_FEC_CONTROLLER_H_
+ 
++#include <cstdint>
+ #include <memory>
+ #include <vector>
+ 
+--- qtwebengine-everywhere-src-5.15.18/src/3rdparty/chromium/third_party/webrtc/modules/video_coding/timestamp_map.h.orig	2024-10-17 10:18:07.000000000 +0200
++++ qtwebengine-everywhere-src-5.15.18/src/3rdparty/chromium/third_party/webrtc/modules/video_coding/timestamp_map.h	2025-11-01 01:35:11.556808370 +0100
+@@ -11,6 +11,7 @@
+ #ifndef MODULES_VIDEO_CODING_TIMESTAMP_MAP_H_
+ #define MODULES_VIDEO_CODING_TIMESTAMP_MAP_H_
+ 
++#include <cstdint>
+ #include <memory>
+ 
+ namespace webrtc {
+--- qtwebengine-everywhere-src-5.15.18/src/3rdparty/chromium/third_party/webrtc/api/network_state_predictor.h.orig	2024-10-17 10:18:07.000000000 +0200
++++ qtwebengine-everywhere-src-5.15.18/src/3rdparty/chromium/third_party/webrtc/api/network_state_predictor.h	2025-11-01 01:36:24.191517175 +0100
+@@ -11,6 +11,7 @@
+ #ifndef API_NETWORK_STATE_PREDICTOR_H_
+ #define API_NETWORK_STATE_PREDICTOR_H_
+ 
++#include <cstdint>
+ #include <memory>
+ #include <vector>
+ 
+--- qtwebengine-everywhere-src-5.15.18/src/3rdparty/chromium/gpu/command_buffer/common/skia_utils.h.orig	2024-10-17 10:18:07.000000000 +0200
++++ qtwebengine-everywhere-src-5.15.18/src/3rdparty/chromium/gpu/command_buffer/common/skia_utils.h	2025-11-01 01:37:50.932487504 +0100
+@@ -5,6 +5,7 @@
+ #ifndef GPU_COMMAND_BUFFER_COMMON_SKIA_UTILS_H_
+ #define GPU_COMMAND_BUFFER_COMMON_SKIA_UTILS_H_
+ 
++#include <cstdint>
+ #include <memory>
+ 
+ #include "base/optional.h"
+--- qtwebengine-everywhere-src-5.15.18/src/3rdparty/chromium/third_party/webrtc/video/stats_counter.h.orig	2024-10-17 10:18:07.000000000 +0200
++++ qtwebengine-everywhere-src-5.15.18/src/3rdparty/chromium/third_party/webrtc/video/stats_counter.h	2025-11-01 01:40:45.391001933 +0100
+@@ -11,6 +11,7 @@
+ #ifndef VIDEO_STATS_COUNTER_H_
+ #define VIDEO_STATS_COUNTER_H_
+ 
++#include <cstdint>
+ #include <memory>
+ #include <string>
+ 
+--- qtwebengine-everywhere-src-5.15.18/src/3rdparty/chromium/third_party/woff2/include/woff2/output.h.orig	2024-10-17 10:18:07.000000000 +0200
++++ qtwebengine-everywhere-src-5.15.18/src/3rdparty/chromium/third_party/woff2/include/woff2/output.h	2025-11-01 02:29:54.987980152 +0100
+@@ -10,6 +10,7 @@
+ #define WOFF2_WOFF2_OUT_H_
+ 
+ #include <algorithm>
++#include <cstdint>
+ #include <cstring>
+ #include <memory>
+ #include <string>
+--- qtwebengine-everywhere-src-5.15.18/src/3rdparty/chromium/gpu/command_buffer/service/gpu_fence_manager.h.orig	2024-10-17 10:18:07.000000000 +0200
++++ qtwebengine-everywhere-src-5.15.18/src/3rdparty/chromium/gpu/command_buffer/service/gpu_fence_manager.h	2025-11-01 10:36:17.593118028 +0100
+@@ -5,6 +5,7 @@
+ #ifndef GPU_COMMAND_BUFFER_SERVICE_GPU_FENCE_MANAGER_H_
+ #define GPU_COMMAND_BUFFER_SERVICE_GPU_FENCE_MANAGER_H_
+ 
++#include <cstdint>
+ #include <memory>
+ #include <vector>
+ 
+--- qtwebengine-everywhere-src-5.15.18/src/3rdparty/chromium/third_party/pdfium/core/fxcodec/jbig2/JBig2_DocumentContext.h.orig	2024-10-17 10:18:07.000000000 +0200
++++ qtwebengine-everywhere-src-5.15.18/src/3rdparty/chromium/third_party/pdfium/core/fxcodec/jbig2/JBig2_DocumentContext.h	2025-11-01 12:14:27.741401995 +0100
+@@ -7,6 +7,7 @@
+ #ifndef CORE_FXCODEC_JBIG2_JBIG2_DOCUMENTCONTEXT_H_
+ #define CORE_FXCODEC_JBIG2_JBIG2_DOCUMENTCONTEXT_H_
+ 
++#include <cstdint>
+ #include <list>
+ #include <memory>
+ #include <utility>
+--- qtwebengine-everywhere-src-5.15.18/src/3rdparty/chromium/third_party/pdfium/third_party/base/span.h.orig	2024-10-17 10:18:07.000000000 +0200
++++ qtwebengine-everywhere-src-5.15.18/src/3rdparty/chromium/third_party/pdfium/third_party/base/span.h	2025-11-01 12:17:09.329694840 +0100
+@@ -7,6 +7,7 @@
+ 
+ #include <stddef.h>
+ 
++#include <cstdint>
+ #include <algorithm>
+ #include <array>
+ #include <iterator>
+--- qtwebengine-everywhere-src-5.15.18/src/3rdparty/chromium/third_party/pdfium/core/fxcodec/jpeg/jpegmodule.h.orig	2024-10-17 10:18:07.000000000 +0200
++++ qtwebengine-everywhere-src-5.15.18/src/3rdparty/chromium/third_party/pdfium/core/fxcodec/jpeg/jpegmodule.h	2025-11-01 12:17:20.036035574 +0100
+@@ -7,6 +7,7 @@
+ #ifndef CORE_FXCODEC_JPEG_JPEGMODULE_H_
+ #define CORE_FXCODEC_JPEG_JPEGMODULE_H_
+ 
++#include <cstdint>
+ #include <memory>
+ 
+ #include "build/build_config.h"
+--- qtwebengine-everywhere-src-5.15.18/src/3rdparty/chromium/third_party/pdfium/core/fxcodec/jbig2/jbig2_decoder.h.orig	2024-10-17 10:18:07.000000000 +0200
++++ qtwebengine-everywhere-src-5.15.18/src/3rdparty/chromium/third_party/pdfium/core/fxcodec/jbig2/jbig2_decoder.h	2025-11-01 12:17:32.772315149 +0100
+@@ -7,6 +7,7 @@
+ #ifndef CORE_FXCODEC_JBIG2_JBIG2_DECODER_H_
+ #define CORE_FXCODEC_JBIG2_JBIG2_DECODER_H_
+ 
++#include <cstdint>
+ #include <memory>
+ 
+ #include "core/fxcodec/fx_codec_def.h"
+--- qtwebengine-everywhere-src-5.15.18/src/3rdparty/chromium/third_party/pdfium/core/fpdfapi/page/cpdf_function.h.orig	2024-10-17 10:18:07.000000000 +0200
++++ qtwebengine-everywhere-src-5.15.18/src/3rdparty/chromium/third_party/pdfium/core/fpdfapi/page/cpdf_function.h	2025-11-01 13:03:54.610067660 +0100
+@@ -7,6 +7,7 @@
+ #ifndef CORE_FPDFAPI_PAGE_CPDF_FUNCTION_H_
+ #define CORE_FPDFAPI_PAGE_CPDF_FUNCTION_H_
+ 
++#include <cstdint>
+ #include <memory>
+ #include <set>
+ #include <vector>
+--- qtwebengine-everywhere-src-5.15.18/src/3rdparty/chromium/third_party/pdfium/core/fpdfapi/page/cpdf_expintfunc.h.orig	2024-10-17 10:18:07.000000000 +0200
++++ qtwebengine-everywhere-src-5.15.18/src/3rdparty/chromium/third_party/pdfium/core/fpdfapi/page/cpdf_expintfunc.h	2025-11-01 13:04:02.572800975 +0100
+@@ -7,6 +7,7 @@
+ #ifndef CORE_FPDFAPI_PAGE_CPDF_EXPINTFUNC_H_
+ #define CORE_FPDFAPI_PAGE_CPDF_EXPINTFUNC_H_
+ 
++#include <cstdint>
+ #include <set>
+ #include <vector>
+ 
