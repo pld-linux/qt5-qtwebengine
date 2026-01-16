@@ -3,6 +3,7 @@
 %bcond_without	doc		# documentation
 %bcond_without	system_libvpx	# system libvpx library
 %bcond_with	system_re2	# system re2 library
+%bcond_with	system_icu	# system icu library
 
 %define		base_version	5.15
 
@@ -66,7 +67,7 @@ BuildRequires:	khrplatform-devel
 BuildRequires:	lcms2-devel
 BuildRequires:	libdrm-devel
 BuildRequires:	libevent-devel
-BuildRequires:	libicu-devel >= 65
+%{?with_system_icu:BuildRequires:	libicu-devel >= 65}
 BuildRequires:	libjpeg-devel
 BuildRequires:	libpng-devel >= 2:1.6.0
 BuildRequires:	libstdc++-devel >= 6:8
@@ -159,7 +160,7 @@ Requires:	alsa-lib >= 1.0.10
 Requires:	freetype >= 1:2.4.2
 Requires:	harfbuzz >= 3.0.0
 Requires:	harfbuzz-subset >= 3.0.0
-Requires:	libicu >= 65
+%{?with_system_icu:Requires:	libicu >= 65}
 Requires:	libpng >= 2:1.6.0
 %{?with_system_libvpx:Requires:	libvpx >= 1.8.0}
 Requires:	nss >= 3.26
@@ -299,8 +300,8 @@ Przykłady do biblioteki Qt5 WebEngine.
 %patch -P8 -p1 -R
 %endif
 %patch -P7 -p1 -d src/3rdparty
-%patch -P9 -p1 -d src/3rdparty
-%patch -P10 -p1
+%{?with_system_icu:%patch -P9 -p1 -d src/3rdparty}
+%patch -P10 -p1 -d src/3rdparty
 
 %if %{without system_re2}
 # avoid finding system re2
@@ -315,7 +316,7 @@ export V8_TARGET_ARCH="x32"
 %endif
 %{qmake_qt5} CONFIG+=use_gold_linker QMAKE_PYTHON2="%{__python}" -- \
 	-webengine-ffmpeg \
-	-webengine-icu \
+	%{?with_system_icu:-webengine-icu} \
 	-webengine-opus \
 	-webengine-proprietary-codecs \
 	-webengine-webp \
@@ -404,6 +405,7 @@ rm -rf $RPM_BUILD_ROOT
 # R: Qt5Core Qt5Qml Qt5Quick Qt5WebEngine Qt5WebEngineCore
 %attr(755,root,root) %{qt5dir}/qml/QtWebEngine/libqtwebengineplugin.so
 %dir %{_datadir}/qt5/resources
+%{!?with_system_icu:%{_datadir}/qt5/resources/icudtl.dat}
 %{_datadir}/qt5/resources/qtwebengine*.pak
 %dir %{_datadir}/qt5/translations/qtwebengine_locales
 %lang(am) %{_datadir}/qt5/translations/qtwebengine_locales/am.pak
