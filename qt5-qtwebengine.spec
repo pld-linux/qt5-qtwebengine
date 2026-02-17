@@ -33,6 +33,7 @@ Patch7:		ninja-1.12.patch
 Patch8:		system-ffmpeg-check.patch
 Patch9:		icu75.patch
 Patch10:	includes.patch
+Patch11:	glibc2.43.patch
 URL:		https://www.qt.io/
 BuildRequires:	Qt5Core-devel >= %{qtbase_ver}
 BuildRequires:	Qt5Designer-devel >= %{qttools_ver}
@@ -302,6 +303,7 @@ Przykłady do biblioteki Qt5 WebEngine.
 %patch -P7 -p1 -d src/3rdparty
 %{?with_system_icu:%patch -P9 -p1 -d src/3rdparty}
 %patch -P10 -p1 -d src/3rdparty
+%patch -P11 -p2
 
 %if %{without system_re2}
 # avoid finding system re2
