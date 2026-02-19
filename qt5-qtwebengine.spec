@@ -122,6 +122,8 @@ BuildRequires:	xorg-proto-glproto-devel
 BuildRequires:	xz
 BuildRequires:	zlib-devel
 BuildConflicts:	Qt5WebEngine-devel
+ExclusiveArch:	%{ix86} %{x8664} %{armv7} %{armv8} aarch64
+ExcludeArch:	i386 i486
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %define		specflags	-fno-strict-aliasing
