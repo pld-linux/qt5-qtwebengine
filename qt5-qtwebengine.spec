@@ -17,12 +17,12 @@
 Summary:	The Qt5 WebEngine library
 Summary(pl.UTF-8):	Biblioteka Qt5 WebEngine
 Name:		qt5-%{orgname}
-Version:	%{base_version}.18
-Release:	7
+Version:	%{base_version}.19
+Release:	1
 License:	LGPL v3 or GPL v2 or GPL v3 or commercial
 Group:		X11/Libraries
 Source0:	https://download.qt.io/archive/qt/5.15/%{version}/submodules/%{orgname}-everywhere-opensource-src-%{version}.tar.xz
-# Source0-md5:	8c070a1a226db18fc806cdf9f965ae78
+# Source0-md5:	0597c7427c24fc8f04ed08abcd7d5801
 Patch0:		x32.patch
 Patch1:		%{name}-gn-dynamic.patch
 Patch3:		qt5-webengine-ffmpeg5.patch
