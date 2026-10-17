@@ -18,7 +18,7 @@ Summary:	The Qt5 WebEngine library
 Summary(pl.UTF-8):	Biblioteka Qt5 WebEngine
 Name:		qt5-%{orgname}
 Version:	%{base_version}.19
-Release:	1
+Release:	2
 License:	LGPL v3 or GPL v2 or GPL v3 or commercial
 Group:		X11/Libraries
 Source0:	https://download.qt.io/archive/qt/5.15/%{version}/submodules/%{orgname}-everywhere-opensource-src-%{version}.tar.xz
@@ -34,6 +34,7 @@ Patch8:		system-ffmpeg-check.patch
 Patch9:		icu75.patch
 Patch10:	includes.patch
 Patch11:	glibc2.43.patch
+Patch12:	ffmpeg7.patch
 URL:		https://www.qt.io/
 BuildRequires:	Qt5Core-devel >= %{qtbase_ver}
 BuildRequires:	Qt5Designer-devel >= %{qttools_ver}
@@ -306,6 +307,7 @@ Przykłady do biblioteki Qt5 WebEngine.
 %{?with_system_icu:%patch -P9 -p1 -d src/3rdparty}
 %patch -P10 -p1 -d src/3rdparty
 %patch -P11 -p2
+%patch -P12 -p1
 
 %if %{without system_re2}
 # avoid finding system re2
